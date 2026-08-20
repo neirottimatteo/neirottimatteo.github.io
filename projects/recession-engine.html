@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recession Probability Engine · Matteo Neirotti</title>
+<meta name="description" content="A monthly US recession probability model built on FRED macro data with XGBoost and SHAP. Version 2: 0.959 out-of-sample AUC, 6/6 modern recessions caught, 13.2 months average advance warning, zero false alarms.">
+<meta name="theme-color" content="#08090b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2308090b'/><text x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23ffb454' text-anchor='middle'>M</text></svg>">
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="../index.html">MATTEO NEIROTTI<span class="dot">.</span></a>
+    <nav class="site-nav">
+      <div class="nav-hide">
+        <a href="../index.html#work" data-it="Lavori">Work</a>
+        <a href="../index.html#about" data-it="Chi sono">About</a>
+        <a href="../index.html#experience" data-it="Esperienza">Experience</a>
+        <a href="../index.html#contact" data-it="Contatti">Contact</a>
+      </div>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="it" aria-pressed="false">IT</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="art">
+  <div class="wrap">
+    <a class="back" href="../index.html#work" data-it="← Tutti i progetti">← All work</a>
+
+    <p class="eyebrow plain" data-it="03 — Machine learning · Ricerca">03 — Machine learning · Research</p>
+    <h1 class="h-lg" data-it="Recession Probability Engine">Recession Probability Engine</h1>
+    <p class="art-meta">
+      <span data-it="Ricerca Kleriox">Kleriox research</span>
+      <span data-it="v1 2025 · v2 2026">v1 2025 · v2 2026</span>
+      <span data-it="Python · XGBoost · SHAP · FRED">Python · XGBoost · SHAP · FRED</span>
+    </p>
+
+    <div class="body">
+
+      <p class="lead" data-it-html="Prevedere una recessione è un problema di apprendimento con pochissimi esempi positivi e infinite occasioni per ingannare se stessi. Ho passato diversi mesi a costruire un modello che stimasse la probabilità di recessione negli Stati Uniti a partire dai dati macro pubblici — e la maggior parte di quel tempo non è servita a rendere il modello più complesso, ma a renderlo <strong>onesto</strong>.">
+        Forecasting a recession is a learning problem with very few positive examples and endless
+        opportunities to fool yourself. I spent several months building a model that estimates
+        the probability of a US recession from public macro data — and most of that time did not
+        go into making the model more complex, but into making it <strong>honest</strong>.
+      </p>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="v">0.959</div>
+          <div class="k" data-it="AUC medio fuori campione">Avg. out-of-sample AUC</div>
+        </div>
+        <div class="metric">
+          <div class="v">6 / 6</div>
+          <div class="k" data-it="Recessioni moderne individuate">Modern recessions caught</div>
+        </div>
+        <div class="metric">
+          <div class="v">13.2 <span style="font-size:.5em" data-it="mesi">mo</span></div>
+          <div class="k" data-it="Preavviso medio">Average advance warning</div>
+        </div>
+        <div class="metric">
+          <div class="v" data-it="Zero">Zero</div>
+          <div class="k" data-it="Falsi allarmi (era moderna)">False alarms (modern era)</div>
+        </div>
+      </div>
+
+      <h2 data-it="Il problema, nella sua forma reale">The problem, in its real form</h2>
+      <p data-it="Prevedere le recessioni è difficile per quattro ragioni che si intrecciano in modo sgradevole.">
+        Forecasting recessions is hard for four reasons that interact in unpleasant ways.
+      </p>
+      <ul>
+        <li data-it-html="<strong>Le etichette arrivano tardi.</strong> Il NBER, l'ente che data ufficialmente le recessioni americane, le annuncia retroattivamente — spesso da sei a dodici mesi dopo. Per i mesi più recenti la verità di riferimento è ancora in scrittura.">
+          <strong>Labels arrive late.</strong> The NBER, the body that officially dates US
+          recessions, announces them retroactively — often six to twelve months after the fact.
+          For recent months the ground truth is still being written.</li>
+        <li data-it-html="<strong>Gli eventi sanguinano in avanti.</strong> Il modello prevede a dodici mesi, quindi un campione dell'inizio 2019 porta etichetta &laquo;recessione in arrivo&raquo; solo perché il COVID è arrivato nel 2020 — non per uno schema economico apprendibile nel 2019.">
+          <strong>Events bleed forward.</strong> The model predicts twelve months ahead, so a
+          sample from early 2019 carries the label "recession incoming" purely because COVID
+          arrived in 2020 — not because of any learnable economic pattern in 2019.</li>
+        <li data-it-html="<strong>I falsi positivi distruggono la credibilità.</strong> Il costo di un falso allarme non è solo sbagliare: è che il successivo allarme vero verrà ignorato.">
+          <strong>False positives destroy credibility.</strong> The cost of a false alarm is not
+          just being wrong — it is that the next real alarm gets ignored.</li>
+        <li data-it-html="<strong>La storia è scarsa.</strong> Dal 1950 ci sono state circa dodici recessioni americane. Non sono molti esempi positivi da cui imparare.">
+          <strong>History is sparse.</strong> There have been roughly twelve US recessions since
+          1950. That is not a lot of positive examples to learn from.</li>
+      </ul>
+      <p data-it-html="Ognuna di queste ha richiesto una scelta progettuale deliberata, e la maggior parte del lavoro sta lì — non nell'algoritmo.">
+        Each of these required a deliberate design choice, and most of the work lives there — not
+        in the algorithm.
+      </p>
+
+      <h2 data-it="I dati">The data</h2>
+      <p data-it-html="Circa <strong>60 serie macroeconomiche da FRED</strong>, il database pubblico della Federal Reserve di St. Louis, con storia fino al 1939, trasformate in feature mensili su quattro assi tematici: mercato del lavoro (disoccupazione, regola di Sahm, richieste di sussidi, part-time involontario), credito e condizioni finanziarie (curva dei rendimenti, spread corporate, high-yield OAS, VIX, criteri di concessione bancari), attività reale (produzione industriale, avvii di cantieri e permessi, ore lavorate, fiducia dei consumatori, vendite al dettaglio) e moneta e prezzi (CPI, PPI, petrolio, M2 reale, bilancio della Fed).">
+        Around <strong>60 macroeconomic series from FRED</strong>, the St. Louis Fed's public
+        database, with history back to 1939, transformed into monthly features across four
+        thematic groups: the labour market (unemployment, the Sahm rule, jobless claims,
+        involuntary part-time work), credit and financial conditions (yield curve spreads,
+        corporate spreads, high-yield OAS, VIX, bank lending standards), real activity
+        (industrial production, housing starts and permits, manufacturing hours, consumer
+        sentiment, retail sales), and money and prices (CPI, PPI, oil, real M2, the Fed balance
+        sheet).
+      </p>
+      <p data-it-html="Dove una serie non esisteva ancora — il VIX prima del 1990, per dire — il valore resta un <em>missing</em> proprio. Non imputato, non azzerato. XGBoost gestisce i valori mancanti nativamente, e fingere che un dato esistesse è un modo silenzioso di mentire al modello.">
+        Where a series did not yet exist — VIX before 1990, say — the value stays a proper
+        missing. Not imputed, not zeroed. XGBoost handles missing values natively, and pretending
+        a number existed is a quiet way of lying to the model.
+      </p>
+      <p data-it-html="Le feature sono organizzate in cinque viste sovrapposte (segnali classici del ciclo dal 1950, macro moderna dal 1977, storia lunga dal 1939, stress finanziario dal 1986, e l'unione completa) invece che in un unico blocco. Questo rende il ragionamento del modello interpretabile — si può chiedere quale &laquo;lente&raquo; sta reagendo — e fornisce una superficie naturale di ablazione. La produzione gira sull'unione: <strong>58 feature</strong>.">
+        The features are organised into five overlapping views (classic cycle signals from 1950,
+        modern macro from 1977, long history from 1939, financial stress from 1986, and the full
+        union) rather than a single block. That makes the model's reasoning interpretable — you
+        can ask which "lens" is firing — and gives a natural ablation surface. Production runs on
+        the union: <strong>58 features</strong>.
+      </p>
+
+      <h2 data-it="Il modello, e perché è noioso">The model, and why it is boring</h2>
+      <p data-it-html="Dieci algoritmi sono stati valutati su tutte le viste — regressione logistica, random forest, SVC, MLP, AdaBoost, naive Bayes e la famiglia gradient boosting. Il gradient boosting ha dominato costantemente. La produzione oggi gira su <strong>XGBoost</strong> da solo, accelerato su GPU; HistGradientBoosting resta disponibile come secondo modello ma non è attivo, perché XGBoost da solo dà la migliore stabilità della soglia.">
+        Ten algorithms were evaluated across all views — logistic regression, random forests, SVC,
+        MLP, AdaBoost, naive Bayes and the gradient boosting family. Gradient boosting dominated
+        consistently. Production today runs on <strong>XGBoost</strong> alone, GPU-accelerated;
+        HistGradientBoosting remains available as a second model but is not active, because
+        XGBoost on its own gives the best threshold stability.
+      </p>
+      <p data-it-html="Niente reti neurali, niente architetture eleganti. Il segnale nei dati macro è lento e relativamente liscio: gli alberi decisionali lo catturano bene e — cosa che conta di più — restano leggibili tramite SHAP. <strong>La sofisticazione qui non è nel modello. È in tutto quello che gli sta intorno.</strong>">
+        No neural networks, no elegant architectures. The signal in macro data is slow-moving and
+        relatively smooth: decision trees capture it well and — which matters more — they stay
+        readable through SHAP. <strong>The sophistication here is not in the model. It is in
+        everything around it.</strong>
+      </p>
+
+      <h2 data-it="Le quattro decisioni che contano davvero">The four decisions that actually matter</h2>
+
+      <h3 data-it="1. Il filtro EMA — il cambiamento più importante">1. The EMA filter — the change that mattered most</h3>
+      <p data-it-html="La versione originale usava un filtro &laquo;confermato&raquo;: l'allarme scatta solo se la probabilità resta sopra soglia per tre mesi consecutivi. Funziona, ma è <em>cieco al percorso</em>: una salita graduale dal 40 al 50% in quattro mesi viene trattata esattamente come un picco improvviso dallo 0 al 70%.">
+        The original version used a "confirmed" filter: the alarm only fires if probability stays
+        above threshold for three consecutive months. It works, but it is <em>path-blind</em>: a
+        gradual climb from 40% to 50% over four months is treated identically to a sudden spike
+        from 0% to 70%.
+      </p>
+      <p data-it-html="Il filtro EMA accumula la storia in modo continuo — <code>EMA_t = α · raw_t + (1−α) · EMA_{t−1}</code>, con α = 0,35 — così un accumulo graduale supera la soglia prima di un picco isolato di pari ampiezza.">
+        The EMA filter accumulates history continuously —
+        <code>EMA_t = α · raw_t + (1−α) · EMA_{t−1}</code>, with α = 0.35 — so a gradual build-up
+        crosses the threshold sooner than an isolated spike of equal magnitude.
+      </p>
+      <p data-it-html="Il confronto diretto, a parità di tutto il resto:">
+        The head-to-head, everything else held constant:
+      </p>
+
+<pre>                    <span class="c">AUC</span>      <span class="c">lead time</span>     <span class="c">2001</span>       <span class="c">false alarms</span>
+confirmed          0.835    11.1 mo       MISS       0
+EMA (α = 0.35)     <span class="c">0.959</span>    <span class="c">13.2 mo</span>       <span class="c">4 mo lead</span>  0</pre>
+
+      <p data-it-html="<strong>+0,124 di AUC e +2,1 mesi di preavviso</strong>, e soprattutto il recupero della recessione del 2001 — quella che la v1 si perdeva. La salita del 2001 aveva una variabilità mensile che continuava a resettare il contatore dei mesi consecutivi; l'EMA la accumula senza azzerarsi.">
+        <strong>+0.124 AUC and +2.1 months of warning</strong>, and above all the recovery of the
+        2001 recession — the one v1 missed. The 2001 build-up had month-to-month variability that
+        kept resetting the consecutive-month counter; the EMA accumulates it without resetting.
+      </p>
+
+      <div class="note">
+        <p data-it-html="Perché il 2001 era così ostico vale da solo un paragrafo. Non è stato un crollo della domanda delle famiglie ma una contrazione localizzata sul lato imprese: nessun crollo immobiliare, nessuna crisi bancaria sistemica. I suoi marcatori — spread high-yield, criteri di concessione bancari, intenzioni di investimento — sono serie che <em>iniziano</em> negli anni Novanta. Nel fold di validazione che testa il 2001, il modello è addestrato solo su dati precedenti al 1992: quelle feature avevano visto <strong>zero recessioni</strong>. Il modello le ignorava, correttamente.">
+          Why 2001 was so awkward deserves its own paragraph. It was not a collapse in household
+          demand but a localised contraction on the corporate side: no housing crash, no systemic
+          banking crisis. Its markers — high-yield spreads, bank lending standards, capital
+          expenditure intent — are series that <em>begin</em> in the 1990s. In the validation fold
+          that tests 2001, the model trains only on data before 1992: those features had seen
+          <strong>zero recessions</strong>. The model ignored them, correctly.
+        </p>
+      </div>
+
+      <h3 data-it="2. Allineamento al ritardo di pubblicazione">2. Publication-lag alignment</h3>
+      <p data-it-html="Questa è la parte noiosa che decide se un modello macro è reale o è finzione. Le serie FRED sono indicizzate al <em>periodo di riferimento</em>, non alla <em>data di pubblicazione</em>: il dato di marzo esiste in archivio con data marzo, ma nel mondo reale esce ad aprile. Le serie trimestrali escono anche quattro mesi dopo la fine del trimestre.">
+        This is the boring part that decides whether a macro model is real or fiction. FRED series
+        are indexed by <em>reference period</em>, not by <em>release date</em>: March's figure
+        sits in the archive dated March, but in the real world it appears in April. Quarterly
+        series can land four months after quarter-end.
+      </p>
+      <p data-it-html="Il codice originale agganciava tutto alla fine del periodo di riferimento — cioè dava al modello i dati con uno o tre mesi di anticipo rispetto alla realtà. È <strong>lookahead leakage</strong>, e non si vede: il modello sembra semplicemente più bravo. Correggerlo ha spostato l'AUC di appena +0,008. <strong>L'ho fatto lo stesso, perché quel numero non è il punto</strong> — un modello che bara col tempo non vale niente, anche quando bara poco.">
+        The original code snapped everything to the end of the reference period — that is, handed
+        the model data one to three months before it existed. That is
+        <strong>lookahead leakage</strong>, and it is invisible: the model simply looks better.
+        Fixing it moved AUC by all of +0.008. <strong>I did it anyway, because that number is not
+        the point</strong> — a model that cheats with time is worthless even when it cheats only a
+        little.
+      </p>
+
+      <h3 data-it="3. Il taglio a T−24 mesi e la censura COVID">3. The T−24 month cutoff and COVID censoring</h3>
+      <p data-it-html="Ogni modello è addestrato solo su dati più vecchi di <strong>24 mesi</strong>. I mesi recenti non sono tenuti da parte per il test: sono esclusi del tutto. Il motivo è che il NBER rivede le date, e un mese etichettato oggi &laquo;nessuna recessione&raquo; può diventare &laquo;recessione&raquo; l'anno prossimo. Ventiquattro mesi danno dodici mesi di margine sopra l'orizzonte di previsione a dodici mesi.">
+        Every model trains only on data older than <strong>24 months</strong>. The recent months
+        are not held out for testing — they are excluded entirely. The reason is that the NBER
+        revises its dates, and a month labelled "no recession" today can become "recession" next
+        year. Twenty-four months gives twelve months of margin on top of the twelve-month forecast
+        horizon.
+      </p>
+      <p data-it-html="Il periodo <strong>febbraio 2019 – dicembre 2020</strong> è escluso dalle etichette di addestramento. Il 2019 perché quei campioni portano etichetta positiva solo per via del COVID, e nel 2019 non c'era alcun deterioramento economico apprendibile che lo precedesse. Il 2020 perché una pandemia è uno shock esogeno, non un ciclo economico: <strong>il modello non deve imparare a riconoscere le pandemie</strong>.">
+        The window <strong>February 2019 – December 2020</strong> is excluded from training
+        labels. 2019 because those samples carry a positive label only because of COVID, and there
+        was no learnable economic deterioration in 2019 that preceded it. 2020 because a pandemic
+        is an exogenous shock, not a business cycle: <strong>the model should not learn to detect
+        pandemics</strong>.
+      </p>
+
+      <h3 data-it="4. Validazione walk-forward espansiva">4. Expanding walk-forward validation</h3>
+      <p data-it-html="La cross-validation standard è sbagliata per le serie storiche: addestrare sul fold 3 e testare sul fold 1 significa usare il futuro per prevedere il passato. Qui ogni fold si addestra su tutta la storia fino a un certo punto e testa su <em>tutto quello che segue</em>, aggiungendo una recessione storica alla volta. È esattamente il modo in cui il modello verrebbe usato: si sa solo quello che è successo prima di oggi.">
+        Standard cross-validation is wrong for time series: training on fold 3 and testing on fold
+        1 means using the future to predict the past. Here each fold trains on all history up to a
+        point and tests on <em>everything that follows</em>, adding one historical recession at a
+        time. It is exactly how the model would actually be used: you only ever know what happened
+        before today.
+      </p>
+
+      <h2 data-it="Ogni feature ha dovuto guadagnarsi il posto">Every feature had to earn its place</h2>
+      <p data-it-html="Prima di congelare il set di produzione, ogni feature è passata da un test di ablazione Monte Carlo: <strong>1000 iterazioni</strong> in cui sottoinsiemi casuali di feature vengono rimossi e si registra se AUC e tasso di falsi positivi migliorano o peggiorano.">
+        Before freezing the production set, every feature went through a Monte Carlo ablation
+        test: <strong>1,000 iterations</strong> in which random subsets of features are dropped and
+        the effect on AUC and false-positive rate is recorded.
+      </p>
+      <p data-it-html="Poi ho testato <strong>25 nuove feature candidate</strong> — sondaggi sull'irrigidimento del credito, tassi di insolvenza sui prestiti, posti di lavoro vacanti, bilancio della Fed, varianti dello spread dei rendimenti. <strong>Tutte e 25 hanno fallito.</strong> Ognuna peggiorava l'AUC, alzava i falsi positivi, o entrambi. Nessuna è entrata in produzione: restano nel codice dietro un flag, con l'evidenza che dice di non usarle.">
+        Then I tested <strong>25 candidate new features</strong> — credit tightening surveys, loan
+        delinquency rates, job openings, the Fed balance sheet, yield-spread variants.
+        <strong>All 25 failed.</strong> Every one hurt AUC, raised the false-positive rate, or
+        both. None entered production: they sit in the codebase behind a flag, with the evidence
+        saying not to use them.
+      </p>
+      <p data-it-html="Sei feature erano invece state segnalate per la rimozione dal test drop. Le ho tolte, la validazione walk-forward è peggiorata, e le ho rimesse. Il punteggio di ablazione cattura effetti marginali; le interazioni fra feature contano. <strong>Un test che non sei disposto a contraddire non è un test, è un rituale.</strong>">
+        Six features had been flagged for removal by the drop test. I removed them, walk-forward
+        validation got worse, and I put them back. The ablation score captures marginal effects;
+        feature interactions matter. <strong>A test you are not willing to overrule is not a test,
+        it is a ritual.</strong>
+      </p>
+
+      <h2 data-it="Niente scatole nere">No black boxes</h2>
+      <p data-it-html="Ogni previsione mensile arriva con una scomposizione <strong>SHAP</strong> in tre forme: un riepilogo dell'importanza complessiva delle feature, una timeline che mostra quali fattori guidavano il segnale in ciascun periodo storico, e un waterfall che apre un singolo mese e mostra esattamente cosa ha visto il modello.">
+        Every monthly prediction comes with a <strong>SHAP</strong> decomposition in three forms: a
+        summary of overall feature importance, a timeline showing which factors drove the signal in
+        each historical period, and a waterfall that opens a single month and shows exactly what
+        the model saw.
+      </p>
+      <p data-it-html="Serve a due cose. Tiene onesto il modello — se l'allarme scatta per via di una sola feature oscura, si vede. E collega l'uscita all'intuizione economica: alla domanda &laquo;perché il modello pensa che una recessione sia probabile adesso?&raquo; si può dare una risposta vera.">
+        It does two things. It keeps the model honest — if the alarm is firing because of a single
+        obscure feature, that is visible. And it connects the output to economic intuition: asked
+        "why does the model think a recession is likely now?", you can give a real answer.
+      </p>
+      <p data-it-html="La lettura di giugno 2026 è un buon esempio. Il modello segna <strong>1,3%</strong> — quarto calo mensile consecutivo dal picco del 3,7% di febbraio. Sotto quel numero:">
+        The June 2026 reading is a good example. The model prints <strong>1.3%</strong> — a fourth
+        consecutive monthly decline from February's 3.7% peak. Underneath that number:
+      </p>
+      <ul>
+        <li data-it-html="<strong>Che tiene giù il rischio:</strong> permessi edilizi tornati piatti dopo un −8,6%, profitti aziendali a +18,4% su base annua, richieste di sussidi a −6,9%, part-time involontario a −12,4% in sei mesi.">
+          <strong>Holding risk down:</strong> building permits back to flat after −8.6%, corporate
+          profits at +18.4% year on year, jobless claims at −6.9%, involuntary part-time work down
+          12.4% over six months.</li>
+        <li data-it-html="<strong>Che lo spinge su:</strong> uno shock petrolifero a +42% sopra la media biennale, prezzi alla produzione a +7,8% sui tre mesi, avvii di cantieri passati da ancoraggio positivo a zavorra da −10,9%.">
+          <strong>Pushing it up:</strong> an oil shock running 42% above its two-year average,
+          producer prices at +7.8% over three months, housing starts flipping from a positive
+          anchor to a −10.9% drag.</li>
+      </ul>
+      <p data-it-html="La sfumatura interessante — e il motivo per cui la scomposizione conta più del numero — è che la forza del mercato del lavoro convive con un tasso di partecipazione insolitamente basso. Il cuscinetto occupazionale è più stretto di quanto le richieste di sussidi da sole suggeriscano. <strong>Il modello ha ragione a prezzare il rischio basso oggi; la domanda vera è cosa succede se quegli ancoraggi cedono.</strong>">
+        The interesting nuance — and the reason the decomposition matters more than the number —
+        is that labour strength is coexisting with an unusually low participation rate. The
+        workforce buffer is narrower than headline claims alone suggest.
+        <strong>The model is right to price risk low today; the real question is what happens if
+        those anchors give.</strong>
+      </p>
+
+      <h2 data-it="Che cosa non è">What it is not</h2>
+      <p data-it-html="Non è un sistema di trading. Non è testato in nessun modo che tenga conto di costi di transazione, slippage o del fatto che i mercati spesso prezzano una recessione prima che venga confermata. Non prevede il PIL, non prevede la disoccupazione, non dice quanto sarà profonda o lunga.">
+        It is not a trading system. It is not tested in any way that accounts for transaction
+        costs, slippage, or the fact that markets often price a recession before it is confirmed.
+        It does not forecast GDP, it does not forecast unemployment, and it says nothing about how
+        deep or how long.
+      </p>
+      <p data-it-html="Produce una probabilità che le condizioni economiche dei prossimi dodici mesi includano una contrazione ampia, successivamente riconosciuta come tale dal NBER. È un'affermazione più stretta e più precisa — <strong>e una che può essere valutata storicamente con risposte chiare di giusto o sbagliato</strong>.">
+        It produces a probability that economic conditions over the next twelve months will include
+        a broad contraction, subsequently recognised as such by the NBER. That is a narrower, more
+        precise claim — <strong>and one that can be evaluated historically with clear right or
+        wrong answers</strong>.
+      </p>
+      <p data-it-html="Sui falsi allarmi vale la pena essere precisi. Nei fold moderni, esclusa la finestra COVID, gli unici episodi sopra soglia sono durati uno o due mesi con un massimo del 58,5%, concentrati nello stress immobiliare del 2006 e nel ciclo di rialzi dei tassi 2022–2023. Nessun allarme sostenuto è mai stato emesso senza che seguisse una recessione.">
+        On false alarms it is worth being precise. Across the modern folds, excluding the COVID
+        window, the only above-threshold episodes lasted one or two months and peaked at 58.5%,
+        concentrated in the 2006 housing stress and the 2022–2023 rate-hike cycle. No sustained
+        alarm was ever issued without a recession following.
+      </p>
+
+      <h2 data-it="Riepilogo tecnico">Technical summary</h2>
+      <dl class="spec">
+        <div class="spec-row"><dt data-it="Dati">Data</dt>
+          <dd data-it="~60 serie FRED, 1939–oggi, allineate alle date di rilascio effettive">~60 FRED series, 1939–present, aligned to actual release dates</dd></div>
+        <div class="spec-row"><dt data-it="Obiettivo">Target</dt>
+          <dd data-it="Recessione NBER che inizia entro 12 mesi (probabilità mensile)">NBER recession beginning within 12 months (monthly probability)</dd></div>
+        <div class="spec-row"><dt data-it="Modello">Model</dt>
+          <dd data-it="XGBoost su GPU, 58 feature — scelto fra 10 algoritmi su 5 viste dei dati">XGBoost on GPU, 58 features — chosen from 10 algorithms across 5 dataset views</dd></div>
+        <div class="spec-row"><dt data-it="Filtro">Filter</dt>
+          <dd data-it="EMA α = 0,35, soglia 50%">EMA α = 0.35, 50% threshold</dd></div>
+        <div class="spec-row"><dt data-it="Validazione">Validation</dt>
+          <dd data-it="Walk-forward espansiva, embargo di 12 mesi per fold, taglio addestramento a T−24 mesi">Expanding walk-forward, 12-month fold embargo, T−24 month training cutoff</dd></div>
+        <div class="spec-row"><dt data-it="Esclusioni">Exclusions</dt>
+          <dd data-it="Feb 2019 – Dic 2020 (COVID) esclusi da addestramento e conteggio falsi positivi">Feb 2019 – Dec 2020 (COVID) excluded from training and false-positive counting</dd></div>
+        <div class="spec-row"><dt data-it="Spiegabilità">Explainability</dt>
+          <dd data-it="SHAP — riepilogo, timeline, waterfall — per ogni mese">SHAP — summary, timeline, waterfall — for every month</dd></div>
+        <div class="spec-row"><dt data-it="Cadenza">Cadence</dt>
+          <dd data-it="Aggiornamento pubblico mensile">Monthly public update</dd></div>
+      </dl>
+
+      <h2 data-it="Cosa mi ha insegnato">What it taught me</h2>
+      <p data-it-html="Che nella modellazione macro <strong>l'architettura della pipeline conta più della scelta dell'algoritmo</strong>. Il salto da 0,835 a 0,959 non è arrivato da un modello nuovo: è arrivato da un filtro che rispetta la forma temporale del rischio. E la correzione di cui vado più orgoglioso — l'allineamento alle date di pubblicazione — ha migliorato le metriche di quasi nulla.">
+        That in macro modelling, <strong>pipeline architecture matters more than algorithm
+        choice</strong>. The jump from 0.835 to 0.959 did not come from a new model: it came from a
+        filter that respects the temporal shape of risk. And the correction I am proudest of —
+        aligning to publication dates — improved the metrics by almost nothing.
+      </p>
+      <p data-it="E che pubblicare una previsione ogni mese, con il ragionamento allegato, è la forma più efficace di disciplina che conosca. Non puoi rivedere silenziosamente una tesi che hai già scritto pubblicamente.">
+        And that publishing a forecast every month, with the reasoning attached, is the most
+        effective form of discipline I know. You cannot quietly revise a thesis you have already
+        written in public.
+      </p>
+
+      <div class="next">
+        <span class="dim" data-it="Progetto successivo">Next project</span>
+        <a href="stellantis.html" data-it="Centro Sicurezza Stellantis →">Stellantis Safety Center →</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>© <span class="yr">2026</span> Matteo Neirotti</p>
+    <p data-it="Torino, Italia">Turin, Italy</p>
+  </div>
+</footer>
+
+<script>document.querySelectorAll('.yr').forEach(function(e){e.textContent=new Date().getFullYear()});</script>
+<script src="../assets/site.js"></script>
+</body>
+</html>
