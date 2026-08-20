@@ -19,7 +19,7 @@
     <a class="brand" href="../index.html">MATTEO NEIROTTI<span class="dot">.</span></a>
     <nav class="site-nav">
       <div class="nav-hide">
-        <a href="../index.html#work" data-it="Lavori">Work</a>
+        <a href="../index.html#work" data-it="Progetti">Work</a>
         <a href="../index.html#about" data-it="Chi sono">About</a>
         <a href="../index.html#experience" data-it="Esperienza">Experience</a>
         <a href="../index.html#contact" data-it="Contatti">Contact</a>
@@ -36,17 +36,22 @@
   <div class="wrap">
     <a class="back" href="../index.html#work" data-it="← Tutti i progetti">← All work</a>
 
-    <p class="eyebrow plain" data-it="03 — Machine learning · Ricerca">03 — Machine learning · Research</p>
+    <p class="eyebrow plain">03 — 2026</p>
     <h1 class="h-lg" data-it="Recession Probability Engine">Recession Probability Engine</h1>
     <p class="art-meta">
       <span data-it="Ricerca Kleriox">Kleriox research</span>
-      <span data-it="v1 2025 · v2 2026">v1 2025 · v2 2026</span>
-      <span data-it="Python · XGBoost · SHAP · FRED">Python · XGBoost · SHAP · FRED</span>
+      <span>Python · XGBoost · SHAP · FRED</span>
+      <span><a href="https://github.com/neirottimatteo/research-and-whitepapers/tree/main/Recession%20Probability%20Engine" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none" data-it="Paper su GitHub ↗">Paper on GitHub ↗</a></span>
+    </p>
+
+    <p class="status-line" data-it-html="Aggiornamento pubblico ogni mese. Il paper completo — metodo, validazione e grafici — è su <a href='https://github.com/neirottimatteo/research-and-whitepapers/tree/main/Recession%20Probability%20Engine' target='_blank' rel='noopener'>GitHub</a>.">
+      Updated publicly every month. The full paper — method, validation and charts — is on
+      <a href="https://github.com/neirottimatteo/research-and-whitepapers/tree/main/Recession%20Probability%20Engine" target="_blank" rel="noopener">GitHub</a>.
     </p>
 
     <div class="body">
 
-      <p class="lead" data-it-html="Prevedere una recessione è un problema di apprendimento con pochissimi esempi positivi e infinite occasioni per ingannare se stessi. Ho passato diversi mesi a costruire un modello che stimasse la probabilità di recessione negli Stati Uniti a partire dai dati macro pubblici — e la maggior parte di quel tempo non è servita a rendere il modello più complesso, ma a renderlo <strong>onesto</strong>.">
+      <p class="lead" data-it-html="Prevedere una recessione è un problema di apprendimento con pochissimi esempi positivi e molti modi per ingannare se stessi. Ho passato diversi mesi a costruire un modello che stimasse la probabilità di recessione negli Stati Uniti a partire dai dati macro pubblici. La maggior parte di quel tempo è finita nella pipeline attorno al modello, più che nel modello.">
         Forecasting a recession is a learning problem with very few positive examples and endless
         opportunities to fool yourself. I spent several months building a model that estimates
         the probability of a US recession from public macro data — and most of that time did not
@@ -71,6 +76,15 @@
           <div class="k" data-it="Falsi allarmi (era moderna)">False alarms (modern era)</div>
         </div>
       </div>
+
+      <figure>
+        <img src="../assets/img/recession-walkforward.png" alt="Walk-forward predictions, folds 4 to 11, against NBER recession bands">
+        <figcaption data-it="Previsioni walk-forward, fold 4–11. Le bande rosa sono le recessioni NBER; la linea è la probabilità del modello dopo il filtro EMA; il tratteggio è la soglia del 50%. Ogni fold è addestrato solo su ciò che veniva prima. Lettura corrente: 1,3%.">
+          Walk-forward predictions, folds 4–11. Pink bands are NBER recessions, the line is the
+          model's probability after the EMA filter, the dashed line is the 50% threshold. Each fold
+          trains only on what came before it. Current reading: 1.3%.
+        </figcaption>
+      </figure>
 
       <h2 data-it="Il problema, nella sua forma reale">The problem, in its real form</h2>
       <p data-it="Prevedere le recessioni è difficile per quattro ragioni che si intrecciano in modo sgradevole.">
@@ -129,11 +143,10 @@
         HistGradientBoosting remains available as a second model but is not active, because
         XGBoost on its own gives the best threshold stability.
       </p>
-      <p data-it-html="Niente reti neurali, niente architetture eleganti. Il segnale nei dati macro è lento e relativamente liscio: gli alberi decisionali lo catturano bene e — cosa che conta di più — restano leggibili tramite SHAP. <strong>La sofisticazione qui non è nel modello. È in tutto quello che gli sta intorno.</strong>">
+      <p data-it-html="Niente reti neurali, niente architetture eleganti. Il segnale nei dati macro è lento e relativamente liscio: gli alberi decisionali lo catturano bene e restano leggibili tramite SHAP. La difficoltà di questo progetto sta quasi tutta attorno al modello, non dentro.">
         No neural networks, no elegant architectures. The signal in macro data is slow-moving and
-        relatively smooth: decision trees capture it well and — which matters more — they stay
-        readable through SHAP. <strong>The sophistication here is not in the model. It is in
-        everything around it.</strong>
+        relatively smooth: decision trees capture it well, and they stay readable through SHAP.
+        Most of the difficulty in this project sits around the model rather than inside it.
       </p>
 
       <h2 data-it="Le quattro decisioni che contano davvero">The four decisions that actually matter</h2>
@@ -229,11 +242,10 @@ EMA (α = 0.35)     <span class="c">0.959</span>    <span class="c">13.2 mo</spa
         both. None entered production: they sit in the codebase behind a flag, with the evidence
         saying not to use them.
       </p>
-      <p data-it-html="Sei feature erano invece state segnalate per la rimozione dal test drop. Le ho tolte, la validazione walk-forward è peggiorata, e le ho rimesse. Il punteggio di ablazione cattura effetti marginali; le interazioni fra feature contano. <strong>Un test che non sei disposto a contraddire non è un test, è un rituale.</strong>">
+      <p data-it-html="Sei feature erano invece state segnalate per la rimozione dal test drop. Le ho tolte, la validazione walk-forward è peggiorata, e le ho rimesse. Il punteggio di ablazione cattura effetti marginali, e le interazioni fra feature contano più di quanto il punteggio suggerisca.">
         Six features had been flagged for removal by the drop test. I removed them, walk-forward
-        validation got worse, and I put them back. The ablation score captures marginal effects;
-        feature interactions matter. <strong>A test you are not willing to overrule is not a test,
-        it is a ritual.</strong>
+        validation got worse, and I put them back. The ablation score captures marginal effects,
+        and feature interactions matter more than the score suggests.
       </p>
 
       <h2 data-it="Niente scatole nere">No black boxes</h2>
@@ -248,6 +260,14 @@ EMA (α = 0.35)     <span class="c">0.959</span>    <span class="c">13.2 mo</spa
         obscure feature, that is visible. And it connects the output to economic intuition: asked
         "why does the model think a recession is likely now?", you can give a real answer.
       </p>
+      <figure>
+        <img src="../assets/img/recession-shap-2026-06.png" alt="SHAP waterfall for June 2026, showing each indicator's contribution to the probability">
+        <figcaption data-it="Il waterfall SHAP di giugno 2026: ogni barra è il contributo di un singolo indicatore alla probabilità di quel mese, in su o in giù.">
+          The SHAP waterfall for June 2026: each bar is one indicator's contribution to that
+          month's probability, up or down.
+        </figcaption>
+      </figure>
+
       <p data-it-html="La lettura di giugno 2026 è un buon esempio. Il modello segna <strong>1,3%</strong> — quarto calo mensile consecutivo dal picco del 3,7% di febbraio. Sotto quel numero:">
         The June 2026 reading is a good example. The model prints <strong>1.3%</strong> — a fourth
         consecutive monthly decline from February's 3.7% peak. Underneath that number:
@@ -317,11 +337,17 @@ EMA (α = 0.35)     <span class="c">0.959</span>    <span class="c">13.2 mo</spa
         filter that respects the temporal shape of risk. And the correction I am proudest of —
         aligning to publication dates — improved the metrics by almost nothing.
       </p>
-      <p data-it="E che pubblicare una previsione ogni mese, con il ragionamento allegato, è la forma più efficace di disciplina che conosca. Non puoi rivedere silenziosamente una tesi che hai già scritto pubblicamente.">
-        And that publishing a forecast every month, with the reasoning attached, is the most
-        effective form of discipline I know. You cannot quietly revise a thesis you have already
-        written in public.
+      <p data-it="Pubblicare una lettura ogni mese, con il ragionamento allegato, aiuta anche a restare onesti. Una previsione pubblica non la si può correggere in silenzio.">
+        Publishing a reading every month, with the reasoning attached, also keeps me honest.
+        Once a call is public you cannot quietly revise it.
       </p>
+
+      <div class="note">
+        <p data-it-html="Il paper completo, con la validazione fold per fold e tutti i grafici, è pubblico: <a href='https://github.com/neirottimatteo/research-and-whitepapers/tree/main/Recession%20Probability%20Engine' target='_blank' rel='noopener'>github.com/neirottimatteo/research-and-whitepapers</a>.">
+          The full paper, with fold-by-fold validation and all the charts, is public:
+          <a href="https://github.com/neirottimatteo/research-and-whitepapers/tree/main/Recession%20Probability%20Engine" target="_blank" rel="noopener">github.com/neirottimatteo/research-and-whitepapers</a>.
+        </p>
+      </div>
 
       <div class="next">
         <span class="dim" data-it="Progetto successivo">Next project</span>

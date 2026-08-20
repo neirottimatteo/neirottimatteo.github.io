@@ -7,11 +7,12 @@ Static site. No build step, no dependencies, no framework. Open `index.html` and
 ```
 index.html                      Home — hero, work index, about, experience, toolkit, education, contact
 projects/crono.html             CRONO — wireless timing hardware
-projects/kleriox.html           Kleriox — the company / Fira
+projects/fira.html              Fira — the Kleriox app
 projects/recession-engine.html  Recession Probability Engine
 projects/stellantis.html        Stellantis Safety Center — crash-test data
 assets/site.css                 All styling
 assets/site.js                  EN/IT language toggle + scroll reveal
+assets/img/                     Chart images; drop CRONO prototype photos into assets/img/crono/
 ```
 
 ## Editing text

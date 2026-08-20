@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CRONO — wireless timing for track &amp; field · Matteo Neirotti</title>
-<meta name="description" content="CRONO: a wireless photocell timing system for athletics. Custom PCB, ESP32-S3 firmware, LoRa link, Flutter app with BLE over-the-air firmware updates. Validated under 0.01 s against Microgate Witty.">
+<title>CRONO — wireless timing for athletics · Matteo Neirotti</title>
+<meta name="description" content="CRONO: a wireless photocell timing system for athletics. Custom PCB, ESP32-S3 firmware, LoRa link, Flutter app with Bluetooth firmware updates. Built 2024, stopped 2025.">
 <meta name="theme-color" content="#08090b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
     <a class="brand" href="../index.html">MATTEO NEIROTTI<span class="dot">.</span></a>
     <nav class="site-nav">
       <div class="nav-hide">
-        <a href="../index.html#work" data-it="Lavori">Work</a>
+        <a href="../index.html#work" data-it="Progetti">Work</a>
         <a href="../index.html#about" data-it="Chi sono">About</a>
         <a href="../index.html#experience" data-it="Esperienza">Experience</a>
         <a href="../index.html#contact" data-it="Contatti">Contact</a>
@@ -36,62 +36,50 @@
   <div class="wrap">
     <a class="back" href="../index.html#work" data-it="← Tutti i progetti">← All work</a>
 
-    <p class="eyebrow plain" data-it="01 — Hardware · Prodotto">01 — Hardware · Product</p>
+    <p class="eyebrow plain">01 — 2024</p>
     <h1 class="h-lg">CRONO</h1>
     <p class="art-meta">
       <span data-it="Progetto personale">Personal project</span>
-      <span data-it="2024 — oggi">2024 — present</span>
-      <span data-it="Progettazione, firmware, app, business plan">Design, firmware, app, business plan</span>
+      <span data-it="Elettronica, firmware, app, business plan">Electronics, firmware, app, business plan</span>
+    </p>
+    <p class="status-line grey" data-it="Fermato nel 2025. In fondo alla pagina spiego perché.">
+      Stopped in 2025. There is an explanation at the bottom of the page.
     </p>
 
     <div class="body">
 
-      <p class="lead" data-it="Il cronometraggio a fotocellule è lo strumento base di qualunque allenatore di atletica. È anche assurdamente caro: i sistemi professionali costano fra i 550 e i 700 euro, il che li mette fuori portata per la maggior parte delle società sportive, delle scuole e dei singoli atleti. CRONO nasce da lì — un sistema wireless con la stessa precisione utile, a circa un terzo del prezzo, progettato da zero.">
-        Photocell timing is the basic instrument of any athletics coach. It is also absurdly
-        expensive: professional systems run €550–700, which puts them out of reach for most
-        clubs, schools and individual athletes. CRONO started there — a wireless system with
-        the same usable accuracy at roughly a third of the price, designed from scratch.
+      <p class="lead" data-it="Il cronometraggio a fotocellule è lo strumento base di qualunque allenatore di atletica, e costa fra i 550 e i 700 euro. Per una società sportiva piccola, una scuola o un singolo atleta è fuori portata. Volevo vedere se si poteva fare la stessa cosa, con la stessa precisione utile, a circa un terzo del prezzo.">
+        Photocell timing is the basic instrument of any athletics coach, and it costs between €550
+        and €700. For a small club, a school or an individual athlete that is out of reach. I
+        wanted to see whether the same thing, with the same usable accuracy, could be done at about
+        a third of the price.
       </p>
 
       <div class="metrics">
         <div class="metric">
           <div class="v">&lt; 0.01 s</div>
-          <div class="k" data-it="Deviazione misurata">Measured deviation</div>
+          <div class="k" data-it="Scarto misurato">Measured deviation</div>
         </div>
         <div class="metric">
           <div class="v">€199</div>
-          <div class="k" data-it="Kit vs €550–700">Kit vs €550–700</div>
+          <div class="k" data-it="Kit previsto, contro €550–700">Planned kit, vs €550–700</div>
         </div>
         <div class="metric">
-          <div class="v">OTA</div>
-          <div class="k" data-it="Firmware via Bluetooth">Firmware over Bluetooth</div>
+          <div class="v">ESP32-S3</div>
+          <div class="k" data-it="Su PCB progettata da me">On a board I designed</div>
         </div>
         <div class="metric">
           <div class="v">LoRa</div>
-          <div class="k" data-it="Link wireless a lungo raggio">Long-range wireless link</div>
+          <div class="k" data-it="Collegamento fra le fotocellule">Link between the photocells</div>
         </div>
       </div>
 
-      <h2 data-it="Il problema">The problem</h2>
-      <p data-it-html="Un allenatore che vuole misurare uno sprint sui 30 metri con una precisione reale ha due opzioni: un cronometro a mano, che introduce da solo due o tre decimi di errore di reazione, oppure un sistema a fotocellule professionale. Il primo è inutile per il lavoro serio sulla velocità. Il secondo costa quanto un mese di stipendio.">
-        A coach who wants to measure a 30 m sprint accurately has two options: a hand
-        stopwatch, which introduces two or three tenths of reaction error on its own, or a
-        professional photocell system. The first is useless for serious speed work. The second
-        costs a month's salary.
-      </p>
-      <p data-it-html="In mezzo c'è un vuoto di mercato riempito da prodotti generici da poche decine di euro che non dichiarano la propria precisione, non hanno un'app decente e non ricevono aggiornamenti. CRONO punta esattamente lì: <strong>precisione dichiarata e validata, app moderna, prodotto che migliora nel tempo</strong>.">
-        In between there is a gap filled by generic products that do not state their accuracy,
-        have no decent app, and never get updated. CRONO aims exactly there:
-        <strong>stated and validated accuracy, a modern app, and a product that improves over
-        time</strong>.
-      </p>
-
       <h2 data-it="Come è fatto">How it is built</h2>
-      <p data-it="Ogni fotocellula è un dispositivo autonomo: microcontrollore, sensore a infrarossi, radio, batteria, feedback acustico e luminoso, in un guscio stampato in 3D con inserto filettato standard da 1/4 di pollice per il treppiede. Due unità formano il kit base — partenza e arrivo — e se ne possono aggiungere altre per i tempi intermedi.">
+      <p data-it="Ogni fotocellula è un dispositivo autonomo: microcontrollore, sensore a infrarossi, radio, batteria, buzzer e LED, dentro un guscio stampato in 3D con inserto filettato da 1/4 di pollice per il treppiede. Due unità formano il kit base, partenza e arrivo, e se ne possono aggiungere altre per i tempi intermedi.">
         Each photocell is a self-contained device: microcontroller, infrared sensor, radio,
-        battery, audible and visual feedback, inside a 3D-printed enclosure with a standard
-        1/4" threaded insert for a tripod. Two units form the base kit — start and finish —
-        and more can be added for split times.
+        battery, buzzer and LEDs, inside a 3D-printed shell with a 1/4" threaded insert for a
+        tripod. Two units make the base kit, start and finish, and more can be added for split
+        times.
       </p>
 
       <dl class="spec">
@@ -109,11 +97,11 @@
         </div>
         <div class="spec-row">
           <dt data-it="Alimentazione">Power</dt>
-          <dd data-it="Li-ion ricaricabile via USB-C, circuito di latching con spegnimento software">Rechargeable Li-ion over USB-C, latching power circuit with software shutdown</dd>
+          <dd data-it="Li-ion ricaricabile via USB-C, circuito di latching con spegnimento da software">Rechargeable Li-ion over USB-C, latching power circuit with software shutdown</dd>
         </div>
         <div class="spec-row">
           <dt>PCB</dt>
-          <dd data-it="Scheda progettata su misura in KiCad — schematico, layout, footprint del logo incluso">Custom board designed in KiCad — schematic, layout, custom logo footprint included</dd>
+          <dd data-it="Scheda progettata in KiCad — schematico, layout e footprint del logo">Board designed in KiCad — schematic, layout and a footprint for the logo</dd>
         </div>
         <div class="spec-row">
           <dt data-it="Involucro">Enclosure</dt>
@@ -121,22 +109,40 @@
         </div>
         <div class="spec-row">
           <dt>App</dt>
-          <dd data-it="Flutter — un'unica base di codice per iOS e Android">Flutter — one codebase for iOS and Android</dd>
+          <dd data-it="Flutter — una sola base di codice per iOS e Android">Flutter — one codebase for iOS and Android</dd>
         </div>
       </dl>
 
-      <h2 data-it="La parte tecnicamente interessante: aggiornare il firmware dal telefono">The technically interesting part: updating firmware from a phone</h2>
-      <p data-it-html="Un prodotto embedded che non può essere aggiornato è congelato al giorno in cui esce dalla fabbrica. Volevo che CRONO potesse migliorare dopo la vendita, quindi ho scritto un <strong>protocollo di comunicazione su misura</strong> fra l'ESP32 e l'app Flutter che gestisce sia lo scambio dati normale sia l'aggiornamento firmware over-the-air via Bluetooth.">
-        An embedded product that cannot be updated is frozen on the day it leaves the factory.
-        I wanted CRONO to improve after it is sold, so I wrote a <strong>custom communication
-        protocol</strong> between the ESP32 and the Flutter app that handles both normal data
-        exchange and over-the-air firmware updates over Bluetooth.
+      <!-- ============================================================
+           PROTOTYPE PHOTOS
+           Drop your photos into assets/img/crono/ and uncomment this block.
+           Suggested: the assembled photocell, the 3D-printed case (a print
+           in progress is great), and the board. Any size — they get cropped
+           to 4:3. Rename the files or change the src below to match.
+           ============================================================ -->
+      <!--
+      <div class="gallery">
+        <img src="../assets/img/crono/prototype.jpg" alt="The assembled CRONO photocell">
+        <img src="../assets/img/crono/case-print.jpg" alt="The 3D-printed enclosure">
+        <img src="../assets/img/crono/board.jpg" alt="The custom PCB">
+      </div>
+      <p class="dim" style="font-family:var(--mono);font-size:11.5px;margin-top:4px"
+         data-it="Il prototipo, l'involucro stampato in 3D e la scheda.">
+        The prototype, the 3D-printed enclosure and the board.
       </p>
-      <p data-it-html="I messaggi usano una sintassi in stile XML, terminata da un asterisco nella direzione app → dispositivo. Il firmware viene spezzato in blocchi da 128 byte e ogni blocco richiede un acknowledgement esplicito prima che venga inviato il successivo: nessun dato parziale finisce mai scritto in flash.">
-        Messages use an XML-like syntax, terminated by an asterisk in the app → device
-        direction. The firmware is split into 128-byte chunks, and each chunk requires an
-        explicit acknowledgement before the next one is sent, so partial data never gets
-        written to flash.
+      -->
+
+      <h2 data-it="La parte tecnicamente interessante: aggiornare il firmware dal telefono">The technically interesting part: updating the firmware from a phone</h2>
+      <p data-it-html="Un prodotto embedded che non si può aggiornare resta fermo al giorno in cui esce dalla fabbrica. Volevo che CRONO potesse migliorare dopo la vendita, quindi ho scritto un <strong>protocollo di comunicazione su misura</strong> fra l'ESP32 e l'app Flutter che gestisce sia lo scambio dati normale sia l'aggiornamento firmware via Bluetooth.">
+        An embedded product that cannot be updated stays frozen on the day it leaves the factory. I
+        wanted CRONO to be able to improve after it was sold, so I wrote a <strong>custom
+        communication protocol</strong> between the ESP32 and the Flutter app that handles both
+        normal data exchange and firmware updates over Bluetooth.
+      </p>
+      <p data-it-html="I messaggi usano una sintassi in stile XML, chiusa da un asterisco nella direzione app → dispositivo. Il firmware viene spezzato in blocchi da 128 byte, e ogni blocco richiede un acknowledgement esplicito prima che parta il successivo, così non finisce mai in flash un dato parziale.">
+        Messages use an XML-like syntax, closed with an asterisk in the app → device direction. The
+        firmware is split into 128-byte chunks, and each chunk needs an explicit acknowledgement
+        before the next one is sent, so partial data never ends up in flash.
       </p>
 
 <pre><span class="c">APP  →</span>  &lt;CMD&gt;START_OTA&lt;/CMD&gt;*
@@ -152,41 +158,37 @@
 <span class="c">APP  →</span>  &lt;END&gt;*
 <span class="c">ESP  ←</span>  &lt;STATE&gt;OTA_COMPLETE&lt;/STATE&gt;*</pre>
 
-      <p data-it-html="Lo stesso canale trasporta i tempi (<code>&amp;lt;TIME&amp;gt;00:10:296&amp;lt;/TIME&amp;gt;*</code>), lo stato del dispositivo (<code>RUNNING</code>, <code>WAITING</code>) e la versione firmware. Qualunque errore fa cadere il dispositivo in <code>OTA_FAIL</code> e l'app interrompe l'operazione — meglio un aggiornamento fallito che un dispositivo mattonato in mezzo a una pista.">
-        The same channel carries times (<code>&lt;TIME&gt;00:10:296&lt;/TIME&gt;*</code>), device
-        state (<code>RUNNING</code>, <code>WAITING</code>) and firmware version. Any error drops
-        the device into <code>OTA_FAIL</code> and the app aborts — better a failed update than a
-        bricked device in the middle of a track.
+      <p data-it-html="Lo stesso canale porta i tempi (<code>&amp;lt;TIME&amp;gt;00:10:296&amp;lt;/TIME&amp;gt;*</code>), lo stato del dispositivo (<code>RUNNING</code>, <code>WAITING</code>) e la versione del firmware. Qualunque errore fa cadere il dispositivo in <code>OTA_FAIL</code> e l'app interrompe: meglio un aggiornamento fallito che un dispositivo mattonato in mezzo a una pista.">
+        The same channel carries the times (<code>&lt;TIME&gt;00:10:296&lt;/TIME&gt;*</code>), the
+        device state (<code>RUNNING</code>, <code>WAITING</code>) and the firmware version. Any
+        error drops the device into <code>OTA_FAIL</code> and the app aborts: better a failed
+        update than a bricked device in the middle of a track.
       </p>
 
       <h2 data-it="Precisione, verificata contro un riferimento">Accuracy, checked against a reference</h2>
-      <p data-it-html="Dichiarare una precisione è facile; dimostrarla no. Ho testato i prototipi in parallelo con un <strong>Microgate Witty</strong>, uno dei riferimenti professionali del settore, misurando le stesse corse contemporaneamente. La deviazione misurata è rimasta <strong>sotto i 0,01 secondi</strong>.">
-        Claiming an accuracy figure is easy; proving it is not. I tested the prototypes side by
-        side with a <strong>Microgate Witty</strong>, one of the professional references in the
-        field, measuring the same runs simultaneously. The measured deviation stayed
-        <strong>under 0.01 seconds</strong>.
+      <p data-it-html="Dichiarare una precisione è facile. Ho testato i prototipi in parallelo con un <strong>Microgate Witty</strong>, uno dei riferimenti professionali del settore, misurando le stesse corse nello stesso momento. Lo scarto è rimasto <strong>sotto i 0,01 secondi</strong>.">
+        Claiming an accuracy figure is easy. I tested the prototypes side by side with a
+        <strong>Microgate Witty</strong>, one of the professional references in the field,
+        measuring the same runs at the same time. The deviation stayed <strong>under 0.01
+        seconds</strong>.
       </p>
-      <p data-it="Per il lavoro reale sulla velocità — sprint, ostacoli, ripetute — quel margine è irrilevante. È la definizione di quando smettere di ottimizzare: la precisione in più costerebbe molto e non cambierebbe una singola decisione di allenamento.">
-        For real speed work — sprints, hurdles, repeats — that margin is irrelevant. It is the
-        definition of when to stop optimising: more precision would cost a lot and would not
-        change a single training decision.
+      <p data-it="Per il lavoro sulla velocità — sprint, ostacoli, ripetute — quel margine non cambia nulla. Spingere oltre sarebbe costato molto senza modificare una singola decisione di allenamento.">
+        For speed work — sprints, hurdles, repeats — that margin changes nothing. Pushing further
+        would have cost a lot without changing a single training decision.
       </p>
-
-      <div class="note">
-        <p data-it-html="<strong>Una funzione che i concorrenti non hanno:</strong> lo start sonoro generato direttamente dalla fotocellula di partenza. Microgate e Freelap richiedono un tablet o un comando esterno; CRONO fa partire l'atleta da solo, il che è esattamente quello che serve quando ti alleni senza qualcuno che ti cronometra.">
-          <strong>One feature the competitors do not have:</strong> an audible start generated
-          by the start photocell itself. Microgate and Freelap need a tablet or an external
-          command; CRONO can start the athlete on its own — which is exactly what you need when
-          you train without someone timing you.
-        </p>
-      </div>
+      <p data-it-html="Il prototipo aveva anche una funzione che i concorrenti non avevano: <strong>lo start sonoro generato dalla fotocellula di partenza</strong>. Microgate e Freelap richiedono un tablet o un comando esterno; CRONO poteva far partire l'atleta da solo, utile quando ti alleni senza nessuno che ti cronometra.">
+        The prototype also had one feature the competitors did not: <strong>an audible start
+        generated by the start photocell itself</strong>. Microgate and Freelap need a tablet or an
+        external command; CRONO could start the athlete on its own, which helps when you train
+        without anyone timing you.
+      </p>
 
       <h2 data-it="Il lato business">The business side</h2>
-      <p data-it-html="CRONO non è un esercizio di elettronica: è un prodotto, e l'ho trattato come tale. Ho scritto un business plan completo — distinta base a livello di componente, costi variabili per kit, costi fissi, analisi competitiva, strategia di prezzo su più fasce Kickstarter, scenari di volume con break-even e registro dei rischi.">
-        CRONO is not an electronics exercise — it is a product, and I treated it like one. I
-        wrote a full business plan: component-level bill of materials, variable cost per kit,
-        fixed costs, competitive analysis, tiered Kickstarter pricing, volume scenarios with
-        break-even, and a risk register.
+      <p data-it="L'ho trattato come un prodotto, non come un esercizio di elettronica. Ho scritto un business plan completo: distinta base a livello di componente, costi variabili per kit, costi fissi, analisi competitiva, fasce di prezzo per una campagna Kickstarter, scenari di volume con break-even e registro dei rischi.">
+        I treated it as a product rather than an electronics exercise. I wrote a full business
+        plan: component-level bill of materials, variable cost per kit, fixed costs, competitive
+        analysis, price tiers for a Kickstarter campaign, volume scenarios with break-even, and a
+        risk register.
       </p>
 
       <dl class="spec">
@@ -195,7 +197,7 @@
           <dd data-it="≈ 81 € di materiali per kit da due fotocellule, ≈ 88 € spedito nella UE">≈ €81 in materials per two-photocell kit, ≈ €88 delivered within the EU</dd>
         </div>
         <div class="spec-row">
-          <dt data-it="Prezzo">Price</dt>
+          <dt data-it="Prezzo previsto">Planned price</dt>
           <dd data-it="199 € kit standard · 179–189 € early bird · 75–80 € fotocellula aggiuntiva">€199 standard kit · €179–189 early bird · €75–80 per extra photocell</dd>
         </div>
         <div class="spec-row">
@@ -203,28 +205,35 @@
           <dd data-it="Microgate Witty ≈ 550–700 € · Freelap ≈ 700 €+ · generici entry-level sotto i 150 € senza precisione dichiarata">Microgate Witty ≈ €550–700 · Freelap ≈ €700+ · entry-level generics under €150 with no stated accuracy</dd>
         </div>
         <div class="spec-row">
-          <dt data-it="Lancio">Launch</dt>
+          <dt data-it="Lancio previsto">Planned launch</dt>
           <dd data-it="Kickstarter, obiettivo 25.000 €, 120–150 backer, certificazione CE in autodichiarazione">Kickstarter, €25,000 target, 120–150 backers, CE self-declaration route</dd>
         </div>
       </dl>
 
-      <h2 data-it="Stato attuale">Where it stands</h2>
-      <p data-it-html="Il primo prototipo è stato costruito e validato. Il secondo — batteria interna, involucro rivisto, scheda custom al posto della devboard — è in corso, insieme all'identità di marca e alla documentazione hardware. Il percorso davanti è pre-serie, test CE e campagna.">
-        The first prototype was built and validated. The second — internal battery, revised
-        enclosure, custom board replacing the devboard — is in progress, alongside brand
-        identity and hardware documentation. Ahead of it: pre-series units, CE testing, and the
-        campaign.
+      <h2 data-it="Perché l'ho fermato">Why I stopped</h2>
+      <p data-it-html="Nel 2025 sono arrivati sul mercato nuovi concorrenti con prezzi più bassi. Anche avendo funzioni che loro non avevano, i conti diventavano difficili: il margine si assottigliava proprio nella fascia in cui il progetto aveva senso, e coprire i costi fissi avrebbe richiesto volumi che non erano più realistici.">
+        In 2025 new competitors arrived on the market at lower prices. Even with features they did
+        not have, the numbers got difficult: the margin thinned exactly in the band where the
+        project made sense, and covering the fixed costs would have needed volumes that were no
+        longer realistic.
       </p>
-      <p data-it-html="La cosa più utile che questo progetto mi ha insegnato non è tecnica. È che <strong>un prodotto è una catena</strong>: schematico, firmware, protocollo, app, involucro, packaging, prezzo, spedizione, supporto. Se una maglia si rompe non hai un prodotto, hai un prototipo.">
-        The most useful thing this project taught me is not technical. It is that
-        <strong>a product is a chain</strong>: schematic, firmware, protocol, app, enclosure,
-        packaging, price, shipping, support. If one link breaks you do not have a product, you
-        have a prototype.
+      <p data-it-html="Il motivo principale però è un altro. Gli amici che seguivano il progetto dal lato atletica, quelli che conoscevano il mercato e le società sportive, hanno perso interesse. <strong>L'atletica non è il mio ambiente</strong>: senza qualcuno con quella rete e quella competenza, avrei dovuto costruire da zero una conoscenza del settore che non avevo, per un mercato la cui economia stava peggiorando. Ho preferito fermarmi.">
+        The main reason is different, though. The friends who were following the project from the
+        athletics side, the ones who knew the market and the clubs, lost interest.
+        <strong>Athletics is not my world</strong>: without someone with that network and that
+        knowledge, I would have had to build up an understanding of the sector from scratch, for a
+        market whose economics were getting worse. I preferred to stop.
+      </p>
+      <p data-it="Il prototipo funzionava e i numeri di precisione erano reali. Quello che mi porto dietro è il resto: progettare una scheda, scrivere un protocollo, costruire un'app, e capire che un prodotto è una catena che deve reggere per intero — schematico, firmware, involucro, prezzo, spedizione, assistenza. Se si rompe una maglia hai un prototipo, non un prodotto.">
+        The prototype worked and the accuracy numbers were real. What I kept is the rest: designing
+        a board, writing a protocol, building an app, and learning that a product is a chain that
+        has to hold along its whole length — schematic, firmware, enclosure, price, shipping,
+        support. If one link breaks you have a prototype, not a product.
       </p>
 
       <div class="next">
         <span class="dim" data-it="Progetto successivo">Next project</span>
-        <a href="kleriox.html" data-it="Kleriox →">Kleriox →</a>
+        <a href="fira.html" data-it="Fira →">Fira →</a>
       </div>
 
     </div>

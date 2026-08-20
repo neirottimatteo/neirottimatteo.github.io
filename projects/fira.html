@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fira — SEC filings in plain language · Matteo Neirotti</title>
+<meta name="description" content="Fira, the app from Kleriox: it reads the documents US-listed companies file with the SEC and rewrites them in plain language minutes after publication, with every sentence tied to a source excerpt.">
+<meta name="theme-color" content="#08090b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2308090b'/><text x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23ffb454' text-anchor='middle'>M</text></svg>">
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="../index.html">MATTEO NEIROTTI<span class="dot">.</span></a>
+    <nav class="site-nav">
+      <div class="nav-hide">
+        <a href="../index.html#work" data-it="Progetti">Work</a>
+        <a href="../index.html#about" data-it="Chi sono">About</a>
+        <a href="../index.html#experience" data-it="Esperienza">Experience</a>
+        <a href="../index.html#contact" data-it="Contatti">Contact</a>
+      </div>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="it" aria-pressed="false">IT</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="art">
+  <div class="wrap">
+    <a class="back" href="../index.html#work" data-it="← Tutti i progetti">← All work</a>
+
+    <p class="eyebrow plain" data-it="02 — 2025 — oggi">02 — 2025 — present</p>
+    <h1 class="h-lg">Fira</h1>
+    <p class="art-meta">
+      <span data-it="Co-founder &amp; CEO, Kleriox">Co-founder &amp; CEO, Kleriox</span>
+      <span data-it="Torino, Italia">Turin, Italy</span>
+      <span><a href="https://kleriox.com" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">kleriox.com ↗</a></span>
+    </p>
+    <p class="status-line" data-it="In closed testing su iOS e Android. Lancio pubblico previsto per l'autunno 2026.">
+      In closed testing on iOS and Android. Public launch planned for autumn 2026.
+    </p>
+
+    <div class="body">
+
+      <p class="lead" data-it-html="Fira è l'app; <strong>Kleriox</strong> è l'azienda che ho co-fondato nel 2025 e di cui sono CEO. Il nome è un acronimo: Financial Intelligence &amp; Research Assistant. L'app sorveglia i documenti ufficiali che le società quotate negli Stati Uniti depositano presso la SEC — risultati trimestrali, 8-K, relazioni annuali, comunicazioni degli insider — e li riscrive in linguaggio comune pochi minuti dopo la pubblicazione.">
+        Fira is the app; <strong>Kleriox</strong> is the company I co-founded in 2025 and run as
+        CEO. The name is an acronym: Financial Intelligence &amp; Research Assistant. The app
+        watches the official documents US-listed companies file with the SEC — quarterly results,
+        8-Ks, annual reports, insider filings — and rewrites them in plain language minutes after
+        publication.
+      </p>
+
+      <h2 data-it="Da dove nasce">Where it comes from</h2>
+      <p data-it="L'informazione finanziaria buona esiste già ed è pubblica. Un deposito SEC è obbligatorio, verificato e legalmente vincolante: è la fonte più affidabile che esista su una società quotata. Il problema non è l'accesso, è il tempo di lettura. Duecento pagine scritte da avvocati per altri avvocati, quattro volte l'anno, per ogni azienda che segui.">
+        Good financial information already exists and is public. An SEC filing is mandatory,
+        audited and legally binding: the most reliable source there is on a listed company. The
+        problem is not access, it is reading time. Two hundred pages written by lawyers for other
+        lawyers, four times a year, for every company you follow.
+      </p>
+      <p data-it="Quasi tutto quello che si legge altrove — un articolo, un post, un commento — è una lettura di seconda mano di quel documento, filtrata da qualcuno con un'agenda e con qualche ora di ritardo. Fira accorcia quella catena: comprime il documento originale invece di commentarlo.">
+        Almost everything you read elsewhere — an article, a post, a comment — is a second-hand
+        reading of that document, filtered through someone with an agenda and a few hours late.
+        Fira shortens that chain: it compresses the original document instead of commenting on it.
+      </p>
+
+      <h2 data-it="La regola che decide tutto: niente citazione, niente affermazione">The rule that decides everything: no citation, no claim</h2>
+      <p data-it-html="Il vincolo più importante del progetto non è un modello o un'architettura: è che <strong>ogni affermazione in un report deve essere agganciata a un passaggio verificabile del documento originale</strong>. Ogni frase generata porta un indicatore di citazione, e toccandolo si apre un pannello con l'estratto testuale della fonte, parola per parola.">
+        The most important constraint in the project is not a model or an architecture: it is that
+        <strong>every statement in a report must be tied to a verifiable passage in the original
+        document</strong>. Each generated sentence carries a citation marker, and tapping it opens
+        a panel with the verbatim source excerpt.
+      </p>
+      <p data-it="Un modello linguistico che riassume documenti senza ancoraggio produce prosa convincente e ogni tanto falsa. In finanza quello è lo scenario peggiore: qualcuno decide dove mettere dei soldi sulla base di una frase che nessuno può risalire a un documento.">
+        A language model summarising documents without grounding produces convincing prose that is
+        occasionally false. In finance that is the worst case: someone decides where to put money
+        on the strength of a sentence nobody can trace back to a document.
+      </p>
+
+      <h2 data-it="Come è costruito">How it is built</h2>
+      <dl class="spec">
+        <div class="spec-row"><dt data-it="Sorveglianza">Monitoring</dt>
+          <dd data-it="Tre cicli di polling separati: notizie e comunicazioni insider (SEC Form 4) ogni ora, depositi 10-Q e 8-K da EDGAR ogni dodici ore, più i cicli di generazione dei report">Three separate polling loops: news and insider filings (SEC Form 4) hourly, 10-Q and 8-K filings from EDGAR every twelve hours, plus the report generation cycles</dd></div>
+        <div class="spec-row"><dt>Backend</dt>
+          <dd data-it="FastAPI (Python), Postgres, autenticazione JWT, notifiche push ed email">FastAPI (Python), Postgres, JWT auth, push and email notification</dd></div>
+        <div class="spec-row"><dt>Frontend</dt>
+          <dd data-it="React 19 + Vite, mobile-first, app su iOS e Android">React 19 + Vite, mobile-first, apps on iOS and Android</dd></div>
+        <div class="spec-row"><dt data-it="Generazione">Generation</dt>
+          <dd data-it="Report in Markdown ancorati al documento, con gli estratti di fonte salvati insieme al testo">Markdown reports grounded in the document, with source excerpts stored alongside the text</dd></div>
+        <div class="spec-row"><dt data-it="Vincolo">Constraint</dt>
+          <dd data-it="L'intero MVP è stato progettato per girare su un Raspberry Pi 5">The entire MVP was designed to run on a Raspberry Pi 5</dd></div>
+      </dl>
+
+      <p data-it-html="Sul Raspberry Pi vale una nota. Costringere l'MVP dentro un computer da cento euro è stata una scelta deliberata: obbliga a essere severi su cosa viene interrogato, quanto spesso e quanto costa. Un prodotto che regge un vincolo stretto scala verso l'alto senza sorprese sui costi.">
+        The Raspberry Pi deserves a note. Forcing the MVP onto a hundred-euro computer was a
+        deliberate choice: it makes you severe about what gets queried, how often, and what it
+        costs. A product that survives a tight constraint scales upward without surprises on the
+        cost side.
+      </p>
+
+      <p data-it-html="Il prodotto ha cambiato nome due volte prima di trovare quello giusto — internamente &laquo;Delegate Stock&raquo;, poi &laquo;ClariX&raquo;, entrambi abbandonati nel luglio 2026 per conflitti di marchio. Se ti sei imbattuto in DelegateAI nei miei post più vecchi, è la stessa cosa.">
+        The product changed name twice before landing on the right one — internally "Delegate
+        Stock", then "ClariX", both dropped in July 2026 over trademark conflicts. If you came
+        across DelegateAI in my older posts, it is the same thing.
+      </p>
+
+      <h2 data-it="La ricerca">The research</h2>
+      <p data-it-html="Accanto al prodotto pubblichiamo ricerca macroeconomica. Il pezzo principale è il <a href='recession-engine.html'>Recession Probability Engine</a>: un modello che stima ogni mese la probabilità di una recessione negli Stati Uniti e ne pubblica sia il numero sia la scomposizione completa, indicatore per indicatore. C'è anche un paper.">
+        Alongside the product we publish macroeconomic research. The main piece is the
+        <a href="recession-engine.html">Recession Probability Engine</a>: a model that estimates the
+        probability of a US recession every month and publishes both the number and its full
+        driver-by-driver breakdown. There is a paper too.
+      </p>
+
+      <h2 data-it="Il mio ruolo">My role</h2>
+      <ul>
+        <li data-it-html="<strong>Direzione di prodotto</strong> — cosa costruiamo, cosa lasciamo fuori, e in che ordine.">
+          <strong>Product direction</strong> — what we build, what we leave out, and in what order.</li>
+        <li data-it-html="<strong>Architettura</strong> — le scelte strutturali, dal vincolo del Raspberry Pi al modo in cui i report restano agganciati alla fonte.">
+          <strong>Architecture</strong> — the structural choices, from the Raspberry Pi constraint to
+          how reports stay tied to their source.</li>
+        <li data-it-html="<strong>Ricerca e modelli</strong> — il motore macro, dalla pipeline dei dati alla pubblicazione.">
+          <strong>Research and modelling</strong> — the macro engine, from data pipeline to publication.</li>
+        <li data-it-html="<strong>Strategia</strong> — posizionamento, prezzi, rapporti con investitori e partner.">
+          <strong>Strategy</strong> — positioning, pricing, investor and partner relationships.</li>
+      </ul>
+      <p data-it="Kleriox non è un'occupazione a tempo pieno: la porto avanti accanto all'università, che oggi resta la priorità.">
+        Kleriox is not a full-time occupation: I run it alongside university, which is still the
+        priority.
+      </p>
+
+      <div class="next">
+        <span class="dim" data-it="Progetto successivo">Next project</span>
+        <a href="recession-engine.html" data-it="Recession Probability Engine →">Recession Probability Engine →</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>© <span class="yr">2026</span> Matteo Neirotti</p>
+    <p data-it="Torino, Italia">Turin, Italy</p>
+  </div>
+</footer>
+
+<script>document.querySelectorAll('.yr').forEach(function(e){e.textContent=new Date().getFullYear()});</script>
+<script src="../assets/site.js"></script>
+</body>
+</html>
