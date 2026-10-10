@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Recession Probability Engine · Matteo Neirotti</title>
-<meta name="description" content="A monthly US recession probability model built on FRED macro data with XGBoost and SHAP. Version 2: 0.959 out-of-sample AUC, 6/6 modern recessions caught, 13.2 months average advance warning, zero false alarms.">
+<meta name="description" content="A monthly US recession probability model built on public FRED data with XGBoost and SHAP. Tested out of sample: 6/6 recessions caught, 11.3 months average warning, ROC-AUC 0.948, no false alarm since 1985.">
 <meta name="theme-color" content="#08090b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,8 +44,8 @@
       <span><a href="https://github.com/neirottimatteo/research-and-whitepapers/tree/main/Recession%20Probability%20Engine" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none" data-it="Paper su GitHub ↗">Paper on GitHub ↗</a></span>
     </p>
 
-    <p class="status-line" data-it-html="Aggiornamento pubblico ogni mese. Il paper completo — metodo, validazione e grafici — è su <a href='https://github.com/neirottimatteo/research-and-whitepapers/tree/main/Recession%20Probability%20Engine' target='_blank' rel='noopener'>GitHub</a>.">
-      Updated publicly every month. The full paper — method, validation and charts — is on
+    <p class="status-line" data-it-html="Aggiornamento pubblico ogni mese. Il paper — validazione, risultati e grafici — è su <a href='https://github.com/neirottimatteo/research-and-whitepapers/tree/main/Recession%20Probability%20Engine' target='_blank' rel='noopener'>GitHub</a>.">
+      Updated publicly every month. The paper — validation, results and charts — is on
       <a href="https://github.com/neirottimatteo/research-and-whitepapers/tree/main/Recession%20Probability%20Engine" target="_blank" rel="noopener">GitHub</a>.
     </p>
 
@@ -60,29 +60,29 @@
 
       <div class="metrics">
         <div class="metric">
-          <div class="v">0.959</div>
-          <div class="k" data-it="AUC medio fuori campione">Avg. out-of-sample AUC</div>
+          <div class="v">0.948</div>
+          <div class="k" data-it="ROC-AUC fuori campione">Out-of-sample ROC-AUC</div>
         </div>
         <div class="metric">
           <div class="v">6 / 6</div>
           <div class="k" data-it="Recessioni moderne individuate">Modern recessions caught</div>
         </div>
         <div class="metric">
-          <div class="v">13.2 <span style="font-size:.5em" data-it="mesi">mo</span></div>
+          <div class="v">11.3 <span style="font-size:.5em" data-it="mesi">mo</span></div>
           <div class="k" data-it="Preavviso medio">Average advance warning</div>
         </div>
         <div class="metric">
           <div class="v" data-it="Zero">Zero</div>
-          <div class="k" data-it="Falsi allarmi (era moderna)">False alarms (modern era)</div>
+          <div class="k" data-it="Falsi allarmi dal 1985">False alarms since 1985</div>
         </div>
       </div>
 
       <figure>
         <img src="../assets/img/recession-walkforward.png" alt="Walk-forward predictions, folds 4 to 11, against NBER recession bands">
-        <figcaption data-it="Previsioni walk-forward, fold 4–11. Le bande rosa sono le recessioni NBER; la linea è la probabilità del modello dopo il filtro EMA; il tratteggio è la soglia del 50%. Ogni fold è addestrato solo su ciò che veniva prima. Lettura corrente: 1,3%.">
+        <figcaption data-it="Previsioni walk-forward, fold 4–11. Le bande rosa sono le recessioni NBER; la linea è la probabilità pubblicata dal modello; il tratteggio è la soglia del 50%. Ogni fold è addestrato solo su ciò che veniva prima.">
           Walk-forward predictions, folds 4–11. Pink bands are NBER recessions, the line is the
-          model's probability after the EMA filter, the dashed line is the 50% threshold. Each fold
-          trains only on what came before it. Current reading: 1.3%.
+          model's published probability, the dashed line is the 50% threshold. Each fold trains
+          only on what came before it.
         </figcaption>
       </figure>
 
@@ -112,36 +112,21 @@
       </p>
 
       <h2 data-it="I dati">The data</h2>
-      <p data-it-html="Circa <strong>60 serie macroeconomiche da FRED</strong>, il database pubblico della Federal Reserve di St. Louis, con storia fino al 1939, trasformate in feature mensili su quattro assi tematici: mercato del lavoro (disoccupazione, regola di Sahm, richieste di sussidi, part-time involontario), credito e condizioni finanziarie (curva dei rendimenti, spread corporate, high-yield OAS, VIX, criteri di concessione bancari), attività reale (produzione industriale, avvii di cantieri e permessi, ore lavorate, fiducia dei consumatori, vendite al dettaglio) e moneta e prezzi (CPI, PPI, petrolio, M2 reale, bilancio della Fed).">
-        Around <strong>60 macroeconomic series from FRED</strong>, the St. Louis Fed's public
-        database, with history back to 1939, transformed into monthly features across four
-        thematic groups: the labour market (unemployment, the Sahm rule, jobless claims,
-        involuntary part-time work), credit and financial conditions (yield curve spreads,
-        corporate spreads, high-yield OAS, VIX, bank lending standards), real activity
-        (industrial production, housing starts and permits, manufacturing hours, consumer
-        sentiment, retail sales), and money and prices (CPI, PPI, oil, real M2, the Fed balance
-        sheet).
+      <p data-it-html="Dati macroeconomici pubblici da <strong>FRED</strong>, il database della Federal Reserve di St. Louis, con storia fino al 1950: qualche decina di indicatori su mercato del lavoro, credito e condizioni finanziarie, attività reale e prezzi, trasformati in feature mensili.">
+        Public macroeconomic data from <strong>FRED</strong>, the St. Louis Fed's database, with
+        history back to 1950: a few dozen indicators across the labour market, credit and
+        financial conditions, real activity and prices, turned into monthly features.
       </p>
       <p data-it-html="Dove una serie non esisteva ancora — il VIX prima del 1990, per dire — il valore resta un <em>missing</em> proprio. Non imputato, non azzerato. XGBoost gestisce i valori mancanti nativamente, e fingere che un dato esistesse è un modo silenzioso di mentire al modello.">
         Where a series did not yet exist — VIX before 1990, say — the value stays a proper
         missing. Not imputed, not zeroed. XGBoost handles missing values natively, and pretending
         a number existed is a quiet way of lying to the model.
       </p>
-      <p data-it-html="Le feature sono organizzate in cinque viste sovrapposte (segnali classici del ciclo dal 1950, macro moderna dal 1977, storia lunga dal 1939, stress finanziario dal 1986, e l'unione completa) invece che in un unico blocco. Questo rende il ragionamento del modello interpretabile — si può chiedere quale &laquo;lente&raquo; sta reagendo — e fornisce una superficie naturale di ablazione. La produzione gira sull'unione: <strong>58 feature</strong>.">
-        The features are organised into five overlapping views (classic cycle signals from 1950,
-        modern macro from 1977, long history from 1939, financial stress from 1986, and the full
-        union) rather than a single block. That makes the model's reasoning interpretable — you
-        can ask which "lens" is firing — and gives a natural ablation surface. Production runs on
-        the union: <strong>58 features</strong>.
-      </p>
-
       <h2 data-it="Il modello, e perché è noioso">The model, and why it is boring</h2>
-      <p data-it-html="Dieci algoritmi sono stati valutati su tutte le viste — regressione logistica, random forest, SVC, MLP, AdaBoost, naive Bayes e la famiglia gradient boosting. Il gradient boosting ha dominato costantemente. La produzione oggi gira su <strong>XGBoost</strong> da solo, accelerato su GPU; HistGradientBoosting resta disponibile come secondo modello ma non è attivo, perché XGBoost da solo dà la migliore stabilità della soglia.">
-        Ten algorithms were evaluated across all views — logistic regression, random forests, SVC,
-        MLP, AdaBoost, naive Bayes and the gradient boosting family. Gradient boosting dominated
-        consistently. Production today runs on <strong>XGBoost</strong> alone, GPU-accelerated;
-        HistGradientBoosting remains available as a second model but is not active, because
-        XGBoost on its own gives the best threshold stability.
+      <p data-it-html="Sono stati valutati dieci algoritmi — regressione logistica, random forest, SVC, MLP, AdaBoost, naive Bayes e la famiglia gradient boosting. Il gradient boosting ha dominato costantemente. La produzione oggi gira su <strong>XGBoost</strong>, un solo modello.">
+        Ten algorithms were evaluated — logistic regression, random forests, SVC, MLP, AdaBoost,
+        naive Bayes and the gradient boosting family. Gradient boosting dominated consistently.
+        Production today runs on <strong>XGBoost</strong>, a single model.
       </p>
       <p data-it-html="Niente reti neurali, niente architetture eleganti. Il segnale nei dati macro è lento e relativamente liscio: gli alberi decisionali lo catturano bene e restano leggibili tramite SHAP. La difficoltà di questo progetto sta quasi tutta attorno al modello, non dentro.">
         No neural networks, no elegant architectures. The signal in macro data is slow-moving and
@@ -151,73 +136,58 @@
 
       <h2 data-it="Le quattro decisioni che contano davvero">The four decisions that actually matter</h2>
 
-      <h3 data-it="1. Il filtro EMA — il cambiamento più importante">1. The EMA filter — the change that mattered most</h3>
-      <p data-it-html="La versione originale usava un filtro &laquo;confermato&raquo;: l'allarme scatta solo se la probabilità resta sopra soglia per tre mesi consecutivi. Funziona, ma è <em>cieco al percorso</em>: una salita graduale dal 40 al 50% in quattro mesi viene trattata esattamente come un picco improvviso dallo 0 al 70%.">
+      <h3 data-it="1. Un allarme che chiede prove sostenute — il cambiamento più importante">1. An alarm that needs sustained evidence — the change that mattered most</h3>
+      <p data-it-html="La versione originale usava un filtro &laquo;confermato&raquo;: l'allarme scatta solo se la probabilità resta sopra soglia per diversi mesi consecutivi. Funziona, ma è <em>cieco al percorso</em>: una salita graduale viene trattata esattamente come un picco improvviso.">
         The original version used a "confirmed" filter: the alarm only fires if probability stays
-        above threshold for three consecutive months. It works, but it is <em>path-blind</em>: a
-        gradual climb from 40% to 50% over four months is treated identically to a sudden spike
-        from 0% to 70%.
+        above threshold for several consecutive months. It works, but it is <em>path-blind</em>: a
+        gradual climb is treated exactly like a sudden spike.
       </p>
-      <p data-it-html="Il filtro EMA accumula la storia in modo continuo — <code>EMA_t = α · raw_t + (1−α) · EMA_{t−1}</code>, con α = 0,35 — così un accumulo graduale supera la soglia prima di un picco isolato di pari ampiezza.">
-        The EMA filter accumulates history continuously —
-        <code>EMA_t = α · raw_t + (1−α) · EMA_{t−1}</code>, with α = 0.35 — so a gradual build-up
-        crosses the threshold sooner than an isolated spike of equal magnitude.
-      </p>
-      <p data-it-html="Il confronto diretto, a parità di tutto il resto:">
-        The head-to-head, everything else held constant:
-      </p>
-
-<pre>                    <span class="c">AUC</span>      <span class="c">lead time</span>     <span class="c">2001</span>       <span class="c">false alarms</span>
-confirmed          0.835    11.1 mo       MISS       0
-EMA (α = 0.35)     <span class="c">0.959</span>    <span class="c">13.2 mo</span>       <span class="c">4 mo lead</span>  0</pre>
-
-      <p data-it-html="<strong>+0,124 di AUC e +2,1 mesi di preavviso</strong>, e soprattutto il recupero della recessione del 2001 — quella che la v1 si perdeva. La salita del 2001 aveva una variabilità mensile che continuava a resettare il contatore dei mesi consecutivi; l'EMA la accumula senza azzerarsi.">
-        <strong>+0.124 AUC and +2.1 months of warning</strong>, and above all the recovery of the
-        2001 recession — the one v1 missed. The 2001 build-up had month-to-month variability that
-        kept resetting the consecutive-month counter; the EMA accumulates it without resetting.
+      <p data-it-html="La versione 2 lo ha sostituito con una lettura che tiene conto di tutto il percorso recente: un accumulo graduale conta, un picco isolato si spegne prima di poter far scattare l'allarme. Soprattutto, ha recuperato la recessione del 2001 — quella che la v1 si perdeva. La salita del 2001 aveva una variabilità mensile che continuava a resettare il contatore dei mesi consecutivi; la nuova lettura la accumula invece di azzerarsi.">
+        Version 2 replaced it with a reading that weighs the whole recent path: a gradual build-up
+        counts, and an isolated spike fades before it can raise an alarm. Above all, it recovered
+        the 2001 recession — the one v1 missed. The 2001 build-up had month-to-month variability
+        that kept resetting the consecutive-month counter; the new reading accumulates it instead.
       </p>
 
       <div class="note">
-        <p data-it-html="Perché il 2001 era così ostico vale da solo un paragrafo. Non è stato un crollo della domanda delle famiglie ma una contrazione localizzata sul lato imprese: nessun crollo immobiliare, nessuna crisi bancaria sistemica. I suoi marcatori — spread high-yield, criteri di concessione bancari, intenzioni di investimento — sono serie che <em>iniziano</em> negli anni Novanta. Nel fold di validazione che testa il 2001, il modello è addestrato solo su dati precedenti al 1992: quelle feature avevano visto <strong>zero recessioni</strong>. Il modello le ignorava, correttamente.">
+        <p data-it-html="Perché il 2001 era così ostico vale da solo un paragrafo. Non è stato un crollo della domanda delle famiglie ma una contrazione localizzata sul lato imprese: nessun crollo immobiliare, nessuna crisi bancaria sistemica. I suoi marcatori — spread high-yield, criteri di concessione bancari, intenzioni di investimento — sono serie che <em>iniziano</em> negli anni Novanta. Nel fold di validazione che testa il 2001, il modello è addestrato solo su dati fino ai primi anni Novanta: quelle feature avevano visto <strong>zero recessioni</strong>. Il modello le ignorava, correttamente.">
           Why 2001 was so awkward deserves its own paragraph. It was not a collapse in household
           demand but a localised contraction on the corporate side: no housing crash, no systemic
           banking crisis. Its markers — high-yield spreads, bank lending standards, capital
           expenditure intent — are series that <em>begin</em> in the 1990s. In the validation fold
-          that tests 2001, the model trains only on data before 1992: those features had seen
-          <strong>zero recessions</strong>. The model ignored them, correctly.
+          that tests 2001, the model trains only on data up to the early 1990s: those features had
+          seen <strong>zero recessions</strong>. The model ignored them, correctly.
         </p>
       </div>
 
       <h3 data-it="2. Allineamento al ritardo di pubblicazione">2. Publication-lag alignment</h3>
-      <p data-it-html="Questa è la parte noiosa che decide se un modello macro è reale o è finzione. Le serie FRED sono indicizzate al <em>periodo di riferimento</em>, non alla <em>data di pubblicazione</em>: il dato di marzo esiste in archivio con data marzo, ma nel mondo reale esce ad aprile. Le serie trimestrali escono anche quattro mesi dopo la fine del trimestre.">
+      <p data-it-html="Questa è la parte noiosa che decide se un modello macro è reale o è finzione. Le serie FRED sono indicizzate al <em>periodo di riferimento</em>, non alla <em>data di pubblicazione</em>: il dato di marzo esiste in archivio con data marzo, ma nel mondo reale esce più tardi.">
         This is the boring part that decides whether a macro model is real or fiction. FRED series
         are indexed by <em>reference period</em>, not by <em>release date</em>: March's figure
-        sits in the archive dated March, but in the real world it appears in April. Quarterly
-        series can land four months after quarter-end.
+        sits in the archive dated March, but in the real world it appears later.
       </p>
-      <p data-it-html="Il codice originale agganciava tutto alla fine del periodo di riferimento — cioè dava al modello i dati con uno o tre mesi di anticipo rispetto alla realtà. È <strong>lookahead leakage</strong>, e non si vede: il modello sembra semplicemente più bravo. Correggerlo ha spostato l'AUC di appena +0,008. <strong>L'ho fatto lo stesso, perché quel numero non è il punto</strong> — un modello che bara col tempo non vale niente, anche quando bara poco.">
+      <p data-it-html="Il codice originale agganciava tutto alla fine del periodo di riferimento — cioè dava al modello i dati prima che esistessero. È <strong>lookahead leakage</strong>, e non si vede: il modello sembra semplicemente più bravo. Correggerlo ha spostato l'AUC di appena +0,008. <strong>L'ho fatto lo stesso, perché quel numero non è il punto</strong> — un modello che bara col tempo non vale niente, anche quando bara poco.">
         The original code snapped everything to the end of the reference period — that is, handed
-        the model data one to three months before it existed. That is
+        the model data before it existed. That is
         <strong>lookahead leakage</strong>, and it is invisible: the model simply looks better.
         Fixing it moved AUC by all of +0.008. <strong>I did it anyway, because that number is not
         the point</strong> — a model that cheats with time is worthless even when it cheats only a
         little.
       </p>
 
-      <h3 data-it="3. Il taglio a T−24 mesi e la censura COVID">3. The T−24 month cutoff and COVID censoring</h3>
-      <p data-it-html="Ogni modello è addestrato solo su dati più vecchi di <strong>24 mesi</strong>. I mesi recenti non sono tenuti da parte per il test: sono esclusi del tutto. Il motivo è che il NBER rivede le date, e un mese etichettato oggi &laquo;nessuna recessione&raquo; può diventare &laquo;recessione&raquo; l'anno prossimo. Ventiquattro mesi danno dodici mesi di margine sopra l'orizzonte di previsione a dodici mesi.">
-        Every model trains only on data older than <strong>24 months</strong>. The recent months
-        are not held out for testing — they are excluded entirely. The reason is that the NBER
-        revises its dates, and a month labelled "no recession" today can become "recession" next
-        year. Twenty-four months gives twelve months of margin on top of the twelve-month forecast
-        horizon.
+      <h3 data-it="3. Solo etichette definitive, e il COVID tenuto fuori">3. Only settled labels, and COVID kept out</h3>
+      <p data-it-html="Il NBER rivede le date, e un mese etichettato oggi &laquo;nessuna recessione&raquo; può diventare &laquo;recessione&raquo; l'anno prossimo; e l'esito di un mese a dodici mesi si conosce solo dodici mesi dopo. Per questo il modello non si addestra mai su un'etichetta non ancora definitiva. Il modello in produzione non ha visto dati successivi al <strong>gennaio 2019</strong>: tutto ciò che ha pubblicato da allora è davvero fuori campione.">
+        The NBER revises its dates, and a month labelled "no recession" today can become
+        "recession" next year; and a twelve-month outcome is only known twelve months later. So
+        the model never trains on a label that is not settled yet. The live model has seen no data
+        after <strong>January 2019</strong>: everything it has published since is genuinely out of
+        sample.
       </p>
-      <p data-it-html="Il periodo <strong>febbraio 2019 – dicembre 2020</strong> è escluso dalle etichette di addestramento. Il 2019 perché quei campioni portano etichetta positiva solo per via del COVID, e nel 2019 non c'era alcun deterioramento economico apprendibile che lo precedesse. Il 2020 perché una pandemia è uno shock esogeno, non un ciclo economico: <strong>il modello non deve imparare a riconoscere le pandemie</strong>.">
-        The window <strong>February 2019 – December 2020</strong> is excluded from training
-        labels. 2019 because those samples carry a positive label only because of COVID, and there
-        was no learnable economic deterioration in 2019 that preceded it. 2020 because a pandemic
-        is an exogenous shock, not a business cycle: <strong>the model should not learn to detect
-        pandemics</strong>.
+      <p data-it-html="I mesi della pandemia sono esclusi dall'addestramento. I campioni di inizio 2019 portano etichetta positiva solo per via del COVID, e nel 2019 non c'era alcun deterioramento economico apprendibile che lo precedesse; una pandemia è uno shock esogeno, non un ciclo economico: <strong>il modello non deve imparare a riconoscere le pandemie</strong>.">
+        The pandemic months are kept out of training. Early-2019 samples carry a positive label
+        only because of COVID, and there was no learnable economic deterioration in 2019 that
+        preceded it; a pandemic is an exogenous shock, not a business cycle: <strong>the model
+        should not learn to detect pandemics</strong>.
       </p>
 
       <h3 data-it="4. Validazione walk-forward espansiva">4. Expanding walk-forward validation</h3>
@@ -230,22 +200,15 @@ EMA (α = 0.35)     <span class="c">0.959</span>    <span class="c">13.2 mo</spa
       </p>
 
       <h2 data-it="Ogni feature ha dovuto guadagnarsi il posto">Every feature had to earn its place</h2>
-      <p data-it-html="Prima di congelare il set di produzione, ogni feature è passata da un test di ablazione Monte Carlo: <strong>1000 iterazioni</strong> in cui sottoinsiemi casuali di feature vengono rimossi e si registra se AUC e tasso di falsi positivi migliorano o peggiorano.">
-        Before freezing the production set, every feature went through a Monte Carlo ablation
-        test: <strong>1,000 iterations</strong> in which random subsets of features are dropped and
-        the effect on AUC and false-positive rate is recorded.
+      <p data-it-html="Prima di congelare il set di produzione, ogni feature è passata da test di ablazione, e ogni nuova feature candidata doveva migliorare i risultati walk-forward per entrare. <strong>La maggior parte non ci è riuscita:</strong> peggiorava l'AUC, alzava i falsi positivi, o entrambi, e resta fuori.">
+        Before freezing the production set, every feature went through ablation tests, and every
+        candidate new feature had to improve the walk-forward results to get in.
+        <strong>Most did not:</strong> they hurt AUC, raised the false-positive rate, or both, and
+        they stay out.
       </p>
-      <p data-it-html="Poi ho testato <strong>25 nuove feature candidate</strong> — sondaggi sull'irrigidimento del credito, tassi di insolvenza sui prestiti, posti di lavoro vacanti, bilancio della Fed, varianti dello spread dei rendimenti. <strong>Tutte e 25 hanno fallito.</strong> Ognuna peggiorava l'AUC, alzava i falsi positivi, o entrambi. Nessuna è entrata in produzione: restano nel codice dietro un flag, con l'evidenza che dice di non usarle.">
-        Then I tested <strong>25 candidate new features</strong> — credit tightening surveys, loan
-        delinquency rates, job openings, the Fed balance sheet, yield-spread variants.
-        <strong>All 25 failed.</strong> Every one hurt AUC, raised the false-positive rate, or
-        both. None entered production: they sit in the codebase behind a flag, with the evidence
-        saying not to use them.
-      </p>
-      <p data-it-html="Sei feature erano invece state segnalate per la rimozione dal test drop. Le ho tolte, la validazione walk-forward è peggiorata, e le ho rimesse. Il punteggio di ablazione cattura effetti marginali, e le interazioni fra feature contano più di quanto il punteggio suggerisca.">
-        Six features had been flagged for removal by the drop test. I removed them, walk-forward
-        validation got worse, and I put them back. The ablation score captures marginal effects,
-        and feature interactions matter more than the score suggests.
+      <p data-it-html="Anche togliere feature che sembravano deboli peggiorava la validazione. Il punteggio di ablazione cattura effetti marginali, e le interazioni fra feature contano più di quanto il punteggio suggerisca.">
+        Removing features that looked weak made validation worse, too. The ablation score captures
+        marginal effects, and feature interactions matter more than the score suggests.
       </p>
 
       <h2 data-it="Niente scatole nere">No black boxes</h2>
@@ -261,7 +224,7 @@ EMA (α = 0.35)     <span class="c">0.959</span>    <span class="c">13.2 mo</spa
         "why does the model think a recession is likely now?", you can give a real answer.
       </p>
       <figure>
-        <img src="../assets/img/recession-shap-2026-06.png" alt="SHAP waterfall for June 2026, showing each indicator's contribution to the probability">
+        <img src="../assets/img/recession-shap-2026-06.png" alt="Drivers chart for June 2026: each indicator's push toward or away from a recession">
         <figcaption data-it="Il waterfall SHAP di giugno 2026: ogni barra è il contributo di un singolo indicatore alla probabilità di quel mese, in su o in giù.">
           The SHAP waterfall for June 2026: each bar is one indicator's contribution to that
           month's probability, up or down.
@@ -277,10 +240,9 @@ EMA (α = 0.35)     <span class="c">0.959</span>    <span class="c">13.2 mo</spa
           <strong>Holding risk down:</strong> building permits back to flat after −8.6%, corporate
           profits at +18.4% year on year, jobless claims at −6.9%, involuntary part-time work down
           12.4% over six months.</li>
-        <li data-it-html="<strong>Che lo spinge su:</strong> uno shock petrolifero a +42% sopra la media biennale, prezzi alla produzione a +7,8% sui tre mesi, avvii di cantieri passati da ancoraggio positivo a zavorra da −10,9%.">
-          <strong>Pushing it up:</strong> an oil shock running 42% above its two-year average,
-          producer prices at +7.8% over three months, housing starts flipping from a positive
-          anchor to a −10.9% drag.</li>
+        <li data-it-html="<strong>Che lo spinge su:</strong> uno shock petrolifero, prezzi alla produzione a +7,8% sui tre mesi, avvii di cantieri passati da ancoraggio positivo a zavorra da −10,9%.">
+          <strong>Pushing it up:</strong> an oil price shock, producer prices at +7.8% over three
+          months, housing starts flipping from a positive anchor to a −10.9% drag.</li>
       </ul>
       <p data-it-html="La sfumatura interessante — e il motivo per cui la scomposizione conta più del numero — è che la forza del mercato del lavoro convive con un tasso di partecipazione insolitamente basso. Il cuscinetto occupazionale è più stretto di quanto le richieste di sussidi da sole suggeriscano. <strong>Il modello ha ragione a prezzare il rischio basso oggi; la domanda vera è cosa succede se quegli ancoraggi cedono.</strong>">
         The interesting nuance — and the reason the decomposition matters more than the number —
@@ -313,17 +275,17 @@ EMA (α = 0.35)     <span class="c">0.959</span>    <span class="c">13.2 mo</spa
       <h2 data-it="Riepilogo tecnico">Technical summary</h2>
       <dl class="spec">
         <div class="spec-row"><dt data-it="Dati">Data</dt>
-          <dd data-it="~60 serie FRED, 1939–oggi, allineate alle date di rilascio effettive">~60 FRED series, 1939–present, aligned to actual release dates</dd></div>
+          <dd data-it="Dati FRED pubblici, 1950–oggi; ogni dato usato solo da quando è pubblicato">Public FRED data, 1950–present; each input used only once it is published</dd></div>
         <div class="spec-row"><dt data-it="Obiettivo">Target</dt>
           <dd data-it="Recessione NBER che inizia entro 12 mesi (probabilità mensile)">NBER recession beginning within 12 months (monthly probability)</dd></div>
         <div class="spec-row"><dt data-it="Modello">Model</dt>
-          <dd data-it="XGBoost su GPU, 58 feature — scelto fra 10 algoritmi su 5 viste dei dati">XGBoost on GPU, 58 features — chosen from 10 algorithms across 5 dataset views</dd></div>
-        <div class="spec-row"><dt data-it="Filtro">Filter</dt>
-          <dd data-it="EMA α = 0,35, soglia 50%">EMA α = 0.35, 50% threshold</dd></div>
+          <dd data-it="XGBoost — scelto fra 10 algoritmi">XGBoost — chosen from 10 algorithms</dd></div>
+        <div class="spec-row"><dt data-it="Segnale">Signal</dt>
+          <dd data-it="Lettura mensile che richiede prove sostenute; allarme al 50%">A monthly reading that needs sustained evidence; alarm at 50%</dd></div>
         <div class="spec-row"><dt data-it="Validazione">Validation</dt>
-          <dd data-it="Walk-forward espansiva, embargo di 12 mesi per fold, taglio addestramento a T−24 mesi">Expanding walk-forward, 12-month fold embargo, T−24 month training cutoff</dd></div>
+          <dd data-it="Walk-forward espansiva, un periodo di test per recessione; nessuna etichetta usata prima che il suo esito sia noto">Expanding walk-forward, one test period per recession; no label used before its outcome is known</dd></div>
         <div class="spec-row"><dt data-it="Esclusioni">Exclusions</dt>
-          <dd data-it="Feb 2019 – Dic 2020 (COVID) esclusi da addestramento e conteggio falsi positivi">Feb 2019 – Dec 2020 (COVID) excluded from training and false-positive counting</dd></div>
+          <dd data-it="I mesi della pandemia, esclusi da addestramento e valutazione">The pandemic months, kept out of training and scoring</dd></div>
         <div class="spec-row"><dt data-it="Spiegabilità">Explainability</dt>
           <dd data-it="SHAP — riepilogo, timeline, waterfall — per ogni mese">SHAP — summary, timeline, waterfall — for every month</dd></div>
         <div class="spec-row"><dt data-it="Cadenza">Cadence</dt>
@@ -331,11 +293,10 @@ EMA (α = 0.35)     <span class="c">0.959</span>    <span class="c">13.2 mo</spa
       </dl>
 
       <h2 data-it="Cosa mi ha insegnato">What it taught me</h2>
-      <p data-it-html="Che nella modellazione macro <strong>l'architettura della pipeline conta più della scelta dell'algoritmo</strong>. Il salto da 0,835 a 0,959 non è arrivato da un modello nuovo: è arrivato da un filtro che rispetta la forma temporale del rischio. E la correzione di cui vado più orgoglioso — l'allineamento alle date di pubblicazione — ha migliorato le metriche di quasi nulla.">
+      <p data-it-html="Che nella modellazione macro <strong>l'architettura della pipeline conta più della scelta dell'algoritmo</strong>. Il salto più grande non è arrivato da un modello nuovo. E la correzione di cui vado più orgoglioso — l'allineamento alle date di pubblicazione — ha migliorato le metriche di quasi nulla.">
         That in macro modelling, <strong>pipeline architecture matters more than algorithm
-        choice</strong>. The jump from 0.835 to 0.959 did not come from a new model: it came from a
-        filter that respects the temporal shape of risk. And the correction I am proudest of —
-        aligning to publication dates — improved the metrics by almost nothing.
+        choice</strong>. The biggest jump did not come from a new model. And the correction I am
+        proudest of — aligning to publication dates — improved the metrics by almost nothing.
       </p>
       <p data-it="Pubblicare una lettura ogni mese, con il ragionamento allegato, aiuta anche a restare onesti. Una previsione pubblica non la si può correggere in silenzio.">
         Publishing a reading every month, with the reasoning attached, also keeps me honest.
@@ -343,8 +304,8 @@ EMA (α = 0.35)     <span class="c">0.959</span>    <span class="c">13.2 mo</spa
       </p>
 
       <div class="note">
-        <p data-it-html="Il paper completo, con la validazione fold per fold e tutti i grafici, è pubblico: <a href='https://github.com/neirottimatteo/research-and-whitepapers/tree/main/Recession%20Probability%20Engine' target='_blank' rel='noopener'>github.com/neirottimatteo/research-and-whitepapers</a>.">
-          The full paper, with fold-by-fold validation and all the charts, is public:
+        <p data-it-html="Il paper, con la validazione fold per fold e i grafici, è pubblico: <a href='https://github.com/neirottimatteo/research-and-whitepapers/tree/main/Recession%20Probability%20Engine' target='_blank' rel='noopener'>github.com/neirottimatteo/research-and-whitepapers</a>.">
+          The paper, with fold-by-fold validation and the charts, is public:
           <a href="https://github.com/neirottimatteo/research-and-whitepapers/tree/main/Recession%20Probability%20Engine" target="_blank" rel="noopener">github.com/neirottimatteo/research-and-whitepapers</a>.
         </p>
       </div>
