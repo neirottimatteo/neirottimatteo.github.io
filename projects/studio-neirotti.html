@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Neirotti website · Matteo Neirotti</title>
+<meta name="description" content="The website of my father's architecture studio, architettoneirotti.eu. I built it alone in 2023 with Django, before I used AI for coding. In 2026 AI helped mainly with the graphics.">
+<meta name="theme-color" content="#08090b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2308090b'/><text x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%23ffb454' text-anchor='middle'>M</text></svg>">
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="../index.html">MATTEO NEIROTTI<span class="dot">.</span></a>
+    <nav class="site-nav">
+      <div class="nav-hide">
+        <a href="../index.html#projects" data-it="Progetti">Projects</a>
+        <a href="../index.html#about" data-it="Chi sono">About</a>
+        <a href="../index.html#experience" data-it="Esperienza">Experience</a>
+        <a href="../index.html#contact" data-it="Contatti">Contact</a>
+      </div>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="it" aria-pressed="false">IT</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="art">
+  <div class="wrap">
+    <a class="back" href="../index.html#projects" data-it="← Tutti i progetti">← All projects</a>
+
+    <p class="eyebrow plain" data-it="04 — 2023 · online">04 — 2023 · online</p>
+    <h1 class="h-lg" data-it="Sito dello Studio Neirotti">Studio Neirotti website</h1>
+    <p class="art-meta">
+      <span data-it="Fatto da solo">Built alone</span>
+      <span data-it="Per lo studio di mio padre">For my father's studio</span>
+      <span><a href="https://architettoneirotti.eu" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">architettoneirotti.eu ↗</a></span>
+    </p>
+
+    <div class="body">
+
+      <p class="lead" data-it="Il sito dello studio di architettura di mio padre. L'ho costruito da solo nel 2023, quando non usavo ancora l'AI per programmare, e lo tengo aggiornato io.">
+        The website of my father's architecture studio. I built it alone in 2023, before I used AI
+        for coding, and I still look after it.
+      </p>
+
+      <h2 data-it="Cos'è">What it is</h2>
+      <p data-it="È un sito in italiano con le pagine che serve a uno studio: chi siamo, le attività, i lavori svolti con le fotografie, una galleria e i contatti. I lavori e le foto stanno in un database che si gestisce dall'area di amministrazione di Django, quindi per aggiungere un progetto non serve toccare il codice.">
+        It is a site in Italian with the pages a studio needs: who they are, what they do, the
+        completed projects with photographs, a gallery and a contact page. The projects and photos
+        live in a database managed from Django's admin area, so adding a project does not mean
+        touching the code.
+      </p>
+
+      <h2 data-it="Come è fatto">How it is built</h2>
+      <dl class="spec">
+        <div class="spec-row"><dt>Backend</dt>
+          <dd data-it="Django (Python) con SQLite e Pillow per le immagini">Django (Python) with SQLite and Pillow for the images</dd></div>
+        <div class="spec-row"><dt>Frontend</dt>
+          <dd data-it="Template Django con HTML e CSS, e GSAP per le animazioni di alcune pagine">Django templates with HTML and CSS, and GSAP for the animations on some pages</dd></div>
+        <div class="spec-row"><dt data-it="Contatti">Contact</dt>
+          <dd data-it="Modulo con reCAPTCHA e banner dei cookie">Form with reCAPTCHA and a cookie banner</dd></div>
+        <div class="spec-row"><dt>Hosting</dt>
+          <dd>PythonAnywhere</dd></div>
+      </dl>
+
+      <h2 data-it="Prima dell'AI, e dopo">Before AI, and after</h2>
+      <p data-it="Il primo commit è dell'aprile 2023 e il sito è andato online a giugno. Ho fatto tutto io, senza nessun aiuto dell'AI: struttura, database, pagine, stile. Nel 2025 ho fatto qualche aggiornamento piccolo, come il nuovo logo e le statistiche di visita.">
+        The first commit is from April 2023 and the site went online in June. I did everything
+        myself, with no help from AI: structure, database, pages, styling. In 2025 I made a few
+        small updates, like the new logo and visit statistics.
+      </p>
+      <p data-it="Nel 2026 l'AI mi ha aiutato a migliorarlo, soprattutto nella grafica: il logo che si disegna da solo, le foto con i bordi inclinati, le liste dei progetti. Con il suo aiuto ho sistemato anche qualche cosa più piccola, come il modulo di contatto, che non mandava più le email. Il sito però è quello del 2023, e la base è ancora quella.">
+        In 2026 AI helped me improve it, mainly the graphics: the logo that draws itself, the
+        photos with slanted edges, the project lists. With it I also fixed some smaller things,
+        like the contact form, which had stopped sending emails. The site is still the 2023 one,
+        and the foundation is the same.
+      </p>
+
+      <div class="next">
+        <span class="dim" data-it="Altro">More</span>
+        <a href="../index.html#projects" data-it="Tutti i progetti →">All projects →</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>© <span class="yr">2026</span> Matteo Neirotti</p>
+    <p data-it="Torino, Italia">Turin, Italy</p>
+  </div>
+</footer>
+
+<script>document.querySelectorAll('.yr').forEach(function(e){e.textContent=new Date().getFullYear()});</script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

@@ -7,7 +7,8 @@ Static site. No build step, no dependencies, no framework. Open `index.html` and
 ```
 index.html                      Home — hero, work index, about, experience, toolkit, education, contact
 projects/crono.html             CRONO — wireless timing hardware
-projects/fira.html              Fira — the Kleriox app
+projects/kleriox.html           Kleriox, the company and its app
+projects/studio-neirotti.html   My father's architecture studio website
 projects/recession-engine.html  Recession Probability Engine
 projects/stellantis.html        Stellantis Safety Center — crash-test data
 assets/site.css                 All styling

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Stellantis Safety Center — crash-test data · Matteo Neirotti</title>
-<meta name="description" content="Three years on test data management at the Stellantis Safety Center: ISO 17025 accreditation, owning the migration to the ISO 13499 crash-test data standard, and the Python tooling around it.">
+<title>Crash-test data on ISO 13499 · Matteo Neirotti</title>
+<meta name="description" content="At the Stellantis Safety Center I led the project to bring the lab's crash-test data onto ISO 13499, the international standard for exchanging crash-test data. January 2023 to September 2025.">
 <meta name="theme-color" content="#08090b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
     <a class="brand" href="../index.html">MATTEO NEIROTTI<span class="dot">.</span></a>
     <nav class="site-nav">
       <div class="nav-hide">
-        <a href="../index.html#work" data-it="Progetti">Work</a>
+        <a href="../index.html#projects" data-it="Progetti">Projects</a>
         <a href="../index.html#about" data-it="Chi sono">About</a>
         <a href="../index.html#experience" data-it="Esperienza">Experience</a>
         <a href="../index.html#contact" data-it="Contatti">Contact</a>
@@ -34,175 +34,103 @@
 
 <main class="art">
   <div class="wrap">
-    <a class="back" href="../index.html#work" data-it="← Tutti i progetti">← All work</a>
+    <a class="back" href="../index.html#experience" data-it="← Esperienza">← Experience</a>
 
-    <p class="eyebrow plain">04 — 2023–2025</p>
-    <h1 class="h-lg" data-it="Centro Sicurezza Stellantis">Stellantis Safety Center</h1>
+    <p class="eyebrow plain" data-it="Esperienza · 2023–2025">Experience · 2023–2025</p>
+    <h1 class="h-lg" data-it="Dati dei crash test su ISO 13499">Crash-test data on ISO 13499</h1>
     <p class="art-meta">
-      <span data-it="Test Data Management &amp; Integration Lead">Test Data Management &amp; Integration Lead</span>
-      <span data-it="Orbassano · come consulente ALTEN Italia">Orbassano · as a consultant with ALTEN Italia</span>
+      <span data-it="Owner del progetto · Test Data Management &amp; Integration">Project owner · Test Data Management &amp; Integration</span>
+      <span data-it="Centro Sicurezza Stellantis, Orbassano · consulente ALTEN Italia">Stellantis Safety Center, Orbassano · ALTEN Italia consultant</span>
       <span data-it="Gennaio 2023 — Settembre 2025">January 2023 — September 2025</span>
     </p>
 
     <div class="body">
 
-      <p class="lead" data-it-html="Un crash test è irripetibile. Un veicolo vero, manichini strumentati, telecamere ad alta velocità, e un impatto che dura meno di un decimo di secondo. Per rifarlo serve un'altra auto. Quello che resta è il dato, e per quasi tre anni il dato è stato il mio lavoro.">
-        A crash test cannot be repeated. A real vehicle, instrumented dummies, high-speed cameras,
-        and an impact lasting less than a tenth of a second. Running it again means buying another
-        car. What remains is the data, and for almost three years the data was my job.
+      <p class="lead" data-it="Al Centro Sicurezza Stellantis di Orbassano ho guidato il progetto per portare i dati dei crash test del laboratorio sullo standard ISO 13499, la norma internazionale per lo scambio dei dati di crash test.">
+        At the Stellantis Safety Center in Orbassano I led the project to bring the lab's
+        crash-test data onto ISO 13499, the international standard for exchanging crash-test data.
       </p>
 
-      <h2 data-it="Il contesto">The context</h2>
-      <p data-it-html="Il Centro Sicurezza di Orbassano è il laboratorio dove Stellantis verifica la sicurezza passiva dei propri veicoli: prove di omologazione, protocolli dei programmi di valutazione indipendenti, e la lunga coda di test di sviluppo che precede ogni modello. Ci sono arrivato a vent'anni come consulente ALTEN e ci sono rimasto fino a settembre 2025.">
-        The Safety Center in Orbassano is where Stellantis verifies the passive safety of its
-        vehicles: homologation tests, independent rating protocols, and the long tail of
-        development testing that precedes every model. I arrived there at twenty as an ALTEN
-        consultant and stayed until September 2025.
-      </p>
-      <p data-it="Ogni prova produce molti più dati di quanto si immagini da fuori: decine di canali fra accelerometri, celle di carico ed estensimetri sui manichini e sulla struttura, campionati a frequenze molto alte, più i filmati ad alta velocità sincronizzati con l'istante dell'impatto. Tutto va acquisito bene al primo colpo, etichettato senza ambiguità, conservato per anni e reso leggibile da persone e strumenti che quel giorno non erano in sala prove.">
-        Every test produces far more data than you would guess from outside: dozens of channels
-        across accelerometers, load cells and strain gauges on the dummies and on the structure,
-        sampled at very high rates, plus high-speed video synchronised to the moment of impact. All
-        of it has to be acquired correctly on the first attempt, labelled without ambiguity, kept
-        for years, and stay readable by people and tools that were not in the test hall that day.
+      <h2 data-it="Il mio ruolo">My role</h2>
+      <p data-it="Ho lavorato al Centro da gennaio 2023 a settembre 2025 come consulente ALTEN Italia, in Test Data Management &amp; Integration. Ero responsabile dei dati dei crash test del laboratorio: accuratezza, tracciabilità e conformità all'accreditamento ISO 17025 del Centro. Il progetto ISO 13499 è stata la parte più grande di quel lavoro.">
+        I worked at the Center from January 2023 to September 2025 as an ALTEN Italia consultant,
+        in Test Data Management &amp; Integration. I was responsible for the lab's crash-test data:
+        accuracy, traceability and compliance with the Center's ISO 17025 accreditation. The
+        ISO 13499 project was the largest part of that job.
       </p>
 
-      <div class="metrics">
-        <div class="metric">
-          <div class="v">ISO 17025</div>
-          <div class="k" data-it="Accreditamento del laboratorio">Laboratory accreditation</div>
-        </div>
-        <div class="metric">
-          <div class="v">ISO 13499</div>
-          <div class="k" data-it="Standard dati crash test">Crash-test data standard</div>
-        </div>
-        <div class="metric">
-          <div class="v" data-it="2 anni 9 mesi">2 yrs 9 mos</div>
-          <div class="k" data-it="Durata">Length of the role</div>
-        </div>
-      </div>
-
-      <h2 data-it="Il mandato">The mandate</h2>
-      <p data-it-html="Il Centro opera sotto accreditamento <strong>ISO 17025</strong>, la norma che definisce i requisiti di competenza dei laboratori di prova. In pratica una misura non deve solo essere giusta: deve essere dimostrabilmente giusta, anni dopo, davanti a un auditor esterno. Catene di misura tracciabili, strumenti tarati, metodi validati, record ricostruibili.">
-        The Center operates under <strong>ISO 17025</strong> accreditation, the standard defining
-        the competence requirements for testing laboratories. In practice a measurement does not
-        only have to be right: it has to be demonstrably right, years later, in front of an
-        external auditor. Traceable measurement chains, calibrated instruments, validated methods,
-        reconstructable records.
+      <h2 data-it="Il problema">The problem</h2>
+      <p data-it="Quando sono arrivato, i dati delle prove non erano standardizzati. Ogni sistema di acquisizione li scriveva a modo suo, i nomi dei canali seguivano convenzioni interne accumulate negli anni, e ogni strumento di analisi aveva bisogno del proprio adattatore. Condividere i dati con altri centri era difficile.">
+        When I arrived, the test data was not standardised. Each acquisition system wrote it in
+        its own way, channel names followed internal conventions built up over the years, and
+        every analysis tool needed its own adapter. Sharing data with other centers was difficult.
       </p>
-      <p data-it="Il mio compito era tenere insieme tre cose che si tirano addosso a vicenda: dati accurati, dati accessibili a chi serviva nel formato che gli serviva, e una catena che reggesse un audit.">
-        My job was to hold together three things that pull against each other: accurate data, data
-        accessible to whoever needed it in the format they needed, and a chain that would survive
-        an audit.
+      <p data-it="ISO 13499 definisce come si salva una prova per lo scambio: i canali di misura, i metadati su prova, veicolo, occupanti e strumentazione, i file multimediali e un indice che collega tutto.">
+        ISO 13499 defines how a test is stored for exchange: the measurement channels, the
+        metadata about the test, vehicle, occupants and instrumentation, the multimedia files, and
+        an index that links everything.
       </p>
 
-      <h2 data-it="Il progetto principale: portare tutto su ISO 13499">The main project: moving everything onto ISO 13499</h2>
-      <p data-it-html="Quando sono arrivato, i dati delle prove non erano standardizzati. Ogni sistema di acquisizione scriveva a modo suo, i nomi dei canali seguivano convenzioni interne stratificate negli anni, e ogni strumento di analisi aveva bisogno del proprio adattatore. Funzionava, nel senso che i test si facevano — ma ogni scambio verso l'esterno e ogni nuovo strumento costavano lavoro manuale.">
-        When I arrived, the test data was not standardised. Each acquisition system wrote in its
-        own way, channel names followed internal conventions layered up over the years, and every
-        analysis tool needed its own adapter. It worked, in the sense that the tests got done — but
-        every exchange with the outside world and every new tool cost manual work.
-      </p>
-      <p data-it-html="<strong>ISO 13499</strong> è la norma internazionale per lo scambio dei dati di crash test. Definisce come si struttura una prova: i canali di misura in file separati, i metadati che descrivono prova, veicolo, occupanti, strumentazione e condizioni, il materiale multimediale, e un indice che tiene insieme tutto. Il vantaggio non è estetico. Un laboratorio che scrive in formato proprietario si costruisce una prigione: i dati non si scambiano con fornitori, partner ed enti esterni senza conversioni; ogni strumento nuovo richiede un convertitore su misura; e un archivio di prove distrutte diventa illeggibile il giorno in cui il software che le ha scritte non esiste più.">
-        <strong>ISO 13499</strong> is the international standard for exchanging crash-test data. It
-        defines how a test is structured: measurement channels in separate files, the metadata
-        describing test, vehicle, occupants, instrumentation and conditions, the multimedia
-        material, and an index that holds it all together. The benefit is not cosmetic. A
-        laboratory writing in a proprietary format builds itself a prison: data cannot be exchanged
-        with suppliers, partners and external bodies without conversion; every new tool needs a
-        bespoke converter; and an archive of destroyed tests becomes unreadable the day the
-        software that wrote it no longer exists.
-      </p>
-      <p data-it="Il lavoro tecnico è stato mappare cosa producevano davvero i sistemi in uso, individuare dove si discostavano dalla norma, definire le regole di conversione canale per canale, e verificare che nel passaggio non si perdesse nulla: unità, fattori di scala, convenzioni di segno, riferimento temporale rispetto all'istante zero, informazioni di taratura, filtri applicati. Sono i dettagli che non si vedono finché qualcuno non prova a rileggere una prova di due anni prima.">
-        The technical work was mapping what the systems in use actually produced, finding where
-        they diverged from the standard, defining the conversion rules channel by channel, and
-        verifying that nothing was lost in the move: units, scale factors, sign conventions, timing
-        relative to the moment of impact, calibration information, filters applied. These are the
-        details nobody sees until someone tries to reopen a test from two years earlier.
-      </p>
-      <p data-it-html="Ho tenuto anche il presidio su come lo standard e i protocolli di prova evolvevano nel tempo. Un laboratorio che smette di seguirli scivola fuori conformità senza accorgersene.">
-        I also kept watch on how the standard and the test protocols evolved over time. A
-        laboratory that stops following them drifts out of compliance without noticing.
+      <h2 data-it="Come è partito">How it started</h2>
+      <p data-it="Ho individuato il problema, ho definito un approccio e l'ho presentato ai miei responsabili. Era un'esigenza concreta del Centro e mi è stata affidata la guida del progetto. Non mi era stato assegnato: l'ho proposto io.">
+        I identified the problem, defined an approach and presented it to my managers. It was a
+        real need of the Center, and I was given the lead on the project. It had not been assigned
+        to me: I proposed it.
       </p>
 
-      <h2 data-it="Ero io l'owner del progetto">I was the owner of the project</h2>
-      <p data-it-html="La parte tecnica era metà del lavoro. L'altra metà era <strong>tenere insieme le persone</strong>. Il progetto attraversava gruppi diversi con ruoli diversi: chi gestisce il database dei sensori, e conosce ogni trasduttore, la sua taratura e la sua storia; chi si occupa dell'hardware di acquisizione, che scrive i dati grezzi durante l'impatto; chi sviluppa e mantiene gli strumenti di analisi, che li rilegge per produrre curve, indici di lesione e report. E soprattutto chi lavora in sala prove: chi posiziona i sensori, prepara il veicolo e i manichini, esegue la prova.">
-        The technical part was half the job. The other half was <strong>holding the people
-        together</strong>. The project cut across different groups with different roles: the people
-        who own the sensor database, and know every transducer, its calibration and its history;
-        the people who look after the acquisition hardware, which writes the raw data during the
-        impact; the people who develop and maintain the analysis tools, which read it back to
-        produce curves, injury criteria and reports. And above all the people in the test hall: the
-        ones who place the sensors, prepare the vehicle and the dummies, and run the test.
+      <h2 data-it="Il lavoro">The work</h2>
+      <p data-it="Ero il responsabile del progetto. Il software è stato sviluppato in gran parte da altri. Il mio ruolo era raccogliere i requisiti di ogni gruppo, tradurre le esigenze tecniche in richieste chiare per gli sviluppatori e seguire il lavoro fino all'uso quotidiano, mantenendo la visione d'insieme perché niente si perdesse tra un gruppo e l'altro.">
+        I was the project owner. Most of the software was developed by others. My role was to
+        gather the requirements of each group, translate the technical needs into clear requests
+        for the developers, and follow the work through to daily use, keeping an overview so that
+        nothing was lost between groups.
       </p>
-      <p data-it="Come owner del progetto la cosa più importante era avere una visione ampia su tutto, per non perdere niente: nessuna conversione dimenticata, nessun caso limite lasciato indietro, nessun problema segnalato da un gruppo e mai arrivato all'altro. Ogni gruppo vedeva un pezzo, e la maggior parte dei problemi stava esattamente nei punti di giunzione fra un pezzo e l'altro.">
-        As owner of the project the important thing was keeping a wide view over all of it, so that
-        nothing got lost: no forgotten conversion, no edge case left behind, no problem raised by
-        one group that never reached another. Each group saw one piece, and most of the problems
-        sat exactly at the joints between one piece and the next.
+      <p data-it="Il progetto copriva tutta la catena del laboratorio: l'elettronica dei sistemi di acquisizione, il software di registrazione, il database dei sensori, la preparazione della prova, la prova stessa, l'esportazione e l'analisi dei dati. Gli ingressi andavano riuniti in uno solo e adattati alla norma, e l'uscita formattata correttamente.">
+        The project covered the whole chain of the lab: the electronics of the acquisition
+        systems, the recording software, the sensor database, test preparation, the test itself,
+        and the export and analysis of the data. The inputs had to be merged into a single one and
+        adapted to the standard, and the output had to be formatted correctly.
       </p>
-      <p data-it-html="Le esigenze di chi esegue materialmente le prove pesavano quanto quelle tecniche, e a volte di più. Un sistema che rispetta lo standard ma rende più lento il lavoro in sala prove non viene adottato — viene aggirato. Quindi buona parte del progetto è stata capire come lavoravano davvero, cosa li rallentava, dove nascevano gli errori di etichettatura, e costruire qualcosa che <strong>gli semplificasse la giornata</strong> invece di aggiungere passaggi. Non è stato semplice, e ci è voluto parecchio confronto.">
-        The needs of the people actually running the tests mattered as much as the technical ones,
-        sometimes more. A system that respects the standard but slows down the work in the test
-        hall does not get adopted — it gets worked around. So a good share of the project was
-        understanding how they really worked, what slowed them down, where labelling errors came
-        from, and building something that <strong>made their day easier</strong> rather than adding
-        steps. That was not simple, and it took a lot of back and forth.
+      <p data-it="Questo ha comportato molte decisioni, sia su come il sistema avrebbe funzionato per chi lo usa, sia su dettagli tecnici: la conversione da g a metri al secondo quadrato, sensori con caratteristiche particolari, piccole modifiche al software per semplificare il lavoro quotidiano.">
+        This involved many decisions, both on how the system would work for its users and on
+        technical details: converting from g to metres per second squared, sensors with special
+        characteristics, small changes to the software to make daily work easier.
       </p>
-      <p data-it="Una parte concreta del lavoro era scrivere criteri di accettazione espliciti e poi andare a controllarli, prova dopo prova, sistema dopo sistema. Un'integrazione che nessuno verifica resta un'ipotesi.">
-        A concrete part of the work was writing explicit acceptance criteria and then going and
-        checking them, test after test, system after system. An integration nobody verifies stays
-        an assumption.
+      <p data-it="Ho raccolto il feedback dei gruppi coinvolti: chi esegue le prove e chi gestisce il database dei sensori, l'hardware di acquisizione e gli strumenti di analisi. L'obiettivo era una soluzione che funzionasse per tutti e semplificasse il lavoro. I loro processi stavano già cambiando, quindi ho cercato di non aggiungere difficoltà. La facilità d'uso era un requisito.">
+        I gathered feedback from the groups involved: the people who run the tests, and those who
+        manage the sensor database, the acquisition hardware and the analysis tools. The aim was a
+        solution that worked for everyone and made the work easier. Their processes were already
+        changing, so I tried not to add difficulty. Ease of use was a requirement.
       </p>
-
-      <h2 data-it="Gli strumenti in Python">The Python tooling</h2>
-      <p data-it="Molti passaggi erano manuali e ripetitivi, e i passaggi manuali ripetuti producono errori con regolarità statistica. Ho progettato e costruito una serie di applicazioni in Python per toglierli di mezzo.">
-        Many steps were manual and repetitive, and repeated manual steps produce errors with
-        statistical regularity. I designed and built a set of Python applications to take them out
-        of the loop.
-      </p>
-      <ul>
-        <li data-it-html="<strong>Conversione</strong> — portare l'uscita dei sistemi di acquisizione nel formato standard, in modo ripetibile e documentato.">
-          <strong>Conversion</strong> — bringing acquisition system output into the standard
-          format, repeatably and with a documented trail.</li>
-        <li data-it-html="<strong>Validazione automatica</strong> — controlli sistematici su struttura, metadati, nomenclatura dei canali e coerenza, eseguiti prima che i dati lascino il laboratorio invece che dopo.">
-          <strong>Automated validation</strong> — systematic checks on structure, metadata, channel
-          naming and consistency, run before the data leaves the lab rather than after.</li>
-        <li data-it-html="<strong>Compatibilità con i nuovi strumenti</strong> — preparare e verificare i dati ogni volta che entrava in uso un nuovo strumento di analisi, così che l'adozione non richiedesse di rimettere le mani sull'archivio.">
-          <strong>Compatibility with new tools</strong> — preparing and verifying data whenever a
-          new analysis tool came into use, so that adopting it did not mean reworking the archive
-          by hand.</li>
-      </ul>
-      <p data-it="Il punto non era la velocità. Un processo automatizzato sbaglia sempre allo stesso modo, quindi si trova, si corregge e si può dimostrare di averlo corretto. Un processo manuale sbaglia ogni volta in modo diverso.">
-        The point was not speed. An automated process fails the same way every time, so you can
-        find it, fix it, and prove you fixed it. A manual process fails differently every time.
-      </p>
-      <p data-it="I report di conformità li leggevo e li analizzavo io: quella parte richiedeva giudizio tecnico e non è mai stata automatizzata. Facevo anche un po' di supporto tecnico quando si rompeva qualcosa, ma non era il mio lavoro principale.">
-        I read and analysed the compliance reports myself: that part needed technical judgement and
-        was never automated. I also did some technical support when something broke, though that
-        was not my main job.
+      <p data-it="Ho scritto anche la documentazione del progetto, compresa quella necessaria a restare conformi all'ISO 17025. È stato un lavoro consistente.">
+        I also wrote the project documentation, including what was needed to stay compliant with
+        ISO 17025. It was a substantial amount of work.
       </p>
 
-      <!-- ROOM TO EXPAND: if you have a defensible before/after number — hours saved per test,
-           processing time cut, number of tests or channels migrated — this is the single strongest
-           thing you could add to the page. -->
-
-      <h2 data-it="Come è finita">Where it ended up</h2>
-      <p data-it-html="Quando sono arrivato il sistema non era standardizzato. Quando sono uscito, <strong>buona parte delle prove veniva eseguita in ISO 13499</strong> e gli strumenti di cui avevo seguito la costruzione erano in uso quotidiano.">
-        When I arrived the system was not standardised. When I left, <strong>a good share of the
-        tests were being run in ISO 13499</strong> and the tools whose construction I had managed
-        were in daily use.
+      <h2 data-it="Altro lavoro">Other work</h2>
+      <p data-it="Per altre parti del mio lavoro ho costruito strumenti in Python che toglievano passaggi manuali e ripetitivi, per esempio controlli automatici sui dati prima che uscissero dal laboratorio e la preparazione dei dati per i nuovi strumenti di analisi. Ho scritto io le prime versioni, e in seguito ho usato l'AI per migliorarle. Leggevo e analizzavo anche i report di conformità e davo un po' di supporto tecnico quando qualcosa si rompeva.">
+        For other parts of my job I built Python tools that removed manual, repetitive steps, for
+        example automatic checks on the data before it left the lab and preparing data for new
+        analysis tools. I wrote the first versions myself, and later used AI to improve them. I
+        also read and analysed the compliance reports and gave some technical support when
+        something broke.
       </p>
-      <p data-it="È il lavoro di cui vado più fiero. Non per la parte tecnica, che era interessante ma affrontabile, quanto perché cambiare il modo di lavorare di un laboratorio accreditato, con anni di prassi consolidate alle spalle, richiede che le persone che ci lavorano ci vedano un vantaggio. Quello è stato il pezzo difficile, ed è quello che è riuscito.">
-        It is the work I am proudest of. Not for the technical part, which was interesting but
-        manageable, but because changing how an accredited laboratory works, with years of settled
-        practice behind it, requires the people who work there to see something in it for
-        themselves. That was the hard part, and that is the part that worked.
+
+      <h2 data-it="Dove è arrivato">Where it ended up</h2>
+      <p data-it="Quando me ne sono andato, a settembre 2025, una buona parte delle prove veniva eseguita in ISO 13499 e gli strumenti erano in uso quotidiano.">
+        When I left in September 2025, a good share of the tests were being run in ISO 13499 and
+        the tools were in daily use.
+      </p>
+      <p data-it="Sono fiero di questo lavoro. Ha coinvolto tutti i reparti con cui lavoravo e gran parte del Centro. Sono fiero anche della parte tecnica, anche se non l'ho sviluppata io: integrare sistemi di acquisizione, software e database non era semplice, e il mio ruolo era capire le esigenze di ciascuno e comunicarle chiaramente agli sviluppatori.">
+        I am proud of this work. It involved every department I worked with and a large part of
+        the Center. I am proud of the technical side too, even though I did not develop it myself:
+        integrating acquisition systems, software and the database was not easy, and my role was
+        to understand what each one needed and communicate it clearly to the developers.
       </p>
 
       <div class="next">
-        <span class="dim" data-it="Progetto successivo">Next project</span>
-        <a href="crono.html" data-it="CRONO →">CRONO →</a>
+        <span class="dim" data-it="Altro">More</span>
+        <a href="../index.html#projects" data-it="Progetti →">Projects →</a>
       </div>
 
     </div>

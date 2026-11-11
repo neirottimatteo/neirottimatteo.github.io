@@ -299,3 +299,61 @@ figcaption{
 /* ---------- inline link style inside prose ---------- */
 .body a:not(.btn){ color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(255,180,84,.3); }
 .body a:not(.btn):hover{ border-bottom-color:var(--accent); }
+
+figure video{ width:100%; display:block; border-radius:8px; border:1px solid var(--line-2); background:#000; }
+figcaption{ font-family:var(--mono); font-size:11.5px; color:var(--dim); margin-top:10px; }
+
+/* ---------- recession chart ---------- */
+.rpe-chart{ width:100%; height:auto; display:block; }
+.rpe-chart .ax{ font-family:var(--mono); font-size:13.5px; fill:#7a8291; }
+.rpe-chart .acc{ fill:#ffb454; opacity:.85; }
+.rpe-chart .hi{ fill:#ffd9a0; }
+.rpe-chart .rec{ font-size:12px; }
+.rpe-chart .lab{ font-size:17px; fill:#9aa1ad; }
+.rpe-chart .val{ font-size:17px; fill:#c3c8d0; }
+.rpe-chart .val.hi{ fill:#ffb454; }
+.rpe-chart .band{ fill:#ff5c5c; opacity:.13; }
+.rpe-chart .band-pan{ fill:#ff5c5c; opacity:.06; }
+.rv.in .rpe-chart .reveal{ animation:rpereveal 2.8s cubic-bezier(.3,.6,.3,1) both; }
+@keyframes rpereveal{ from{ clip-path:inset(0 100% 0 0); } to{ clip-path:inset(0 0 0 0); } }
+@media (prefers-reduced-motion:reduce){ .rv.in .rpe-chart .reveal{ animation:none; } }
+.chart-read{ font-family:var(--mono); font-size:12px; color:var(--accent-2); min-height:18px; margin-top:6px; }
+.cmp-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:10px; margin:30px 0; }
+table.cmp{ width:100%; border-collapse:collapse; font-size:15px; background:var(--bg-2); }
+table.cmp th, table.cmp td{ padding:12px 18px; text-align:right; border-top:1px solid var(--line); white-space:nowrap; }
+table.cmp th:first-child, table.cmp td:first-child{ text-align:left; white-space:normal; }
+table.cmp thead th{ border-top:0; font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--dim); font-weight:500; }
+table.cmp td.hl{ color:var(--accent); font-family:var(--mono); }
+
+/* ---------- photo grid ---------- */
+.shots{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px 14px; margin:34px 0; }
+.shots figure{ margin:0; }
+.shots img{ width:100%; aspect-ratio:4/3; object-fit:cover; background:#111; transition:transform .5s cubic-bezier(.2,.7,.2,1), border-color .3s; }
+.shots figure{ overflow:hidden; }
+.shots figure:hover img{ border-color:var(--accent); }
+@media (max-width:560px){ .shots{ grid-template-columns:1fr; } }
+
+/* ---------- motion ---------- */
+@keyframes rise{ from{ opacity:0; transform:translateY(18px); } to{ opacity:1; transform:none; } }
+.hero .wrap > *{ animation:rise .8s var(--ease) both; }
+.hero .wrap > *:nth-child(2){ animation-delay:.08s; }
+.hero .wrap > *:nth-child(3){ animation-delay:.16s; }
+.hero .wrap > *:nth-child(4){ animation-delay:.24s; }
+.hero .wrap > *:nth-child(5){ animation-delay:.32s; }
+.hero .wrap > *:nth-child(n+6){ animation-delay:.4s; }
+.progress{
+  position:fixed; top:0; left:0; right:0; height:2px; z-index:60;
+  background:var(--accent); transform:scaleX(0); transform-origin:0 50%;
+  pointer-events:none;
+}
+.card::before{
+  content:""; position:absolute; left:0; top:0; bottom:0; width:2px;
+  background:var(--accent); transform:scaleY(0); transform-origin:50% 0;
+  transition:transform .35s var(--ease);
+}
+.card:hover::before{ transform:scaleY(1); }
+.shots img{ transition:transform .7s cubic-bezier(.2,.7,.2,1), border-color .3s; }
+.shots figure:hover img{ transform:scale(1.035); }
+.shots figure{ border-radius:8px; }
+.shots figcaption{ position:relative; background:var(--bg); }
+@media (prefers-reduced-motion:reduce){ .progress{ display:none; } }
