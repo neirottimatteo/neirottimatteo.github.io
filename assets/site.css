@@ -300,7 +300,8 @@ figcaption{
 .body a:not(.btn){ color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(255,180,84,.3); }
 .body a:not(.btn):hover{ border-bottom-color:var(--accent); }
 
-figure video{ width:100%; display:block; border-radius:8px; border:1px solid var(--line-2); background:#000; }
+figure video{ display:block; width:auto; max-width:100%; max-height:min(560px,68vh); margin:0 auto; border-radius:8px; border:1px solid var(--line-2); background:#000; }
+figure:has(video) figcaption{ text-align:center; }
 figcaption{ font-family:var(--mono); font-size:11.5px; color:var(--dim); margin-top:10px; }
 
 /* ---------- recession chart ---------- */
